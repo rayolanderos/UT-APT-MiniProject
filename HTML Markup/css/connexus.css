@@ -102,6 +102,47 @@ footer p {
   background-color: #343a40;
 }
 
+table.dataTable.no-footer{border-bottom: none;}
+
+.dataTables_info {
+    font-size: 14px;
+}
+
+/***************
+     Create 
+****************/
+
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+
+.label-info {
+    background-color: #5bc0de;
+}
+
+.bootstrap-tagsinput {
+    width: 100%;
+    padding: 15px;
+    font-size:12px;
+}
+
+.bootstrap-tagsinput .tag {
+    line-height: 30px;
+}
+label.main-label {
+    display: block;
+    font-size: 20px;
+}
+
 /***************
      View 
 ****************/

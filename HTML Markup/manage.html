@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Connexus - Error</title>
+    <title>Connexus - Stream Management</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -18,6 +18,9 @@
 
     <!-- Google Fonts CSS -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+    <!--- Bootstrap Datatables -->
+    <link rel="stylesheet" type="text/css" href="vendor/datatables/css/jquery.dataTables.css">
 
     <!-- Custom styles for this template -->
     <link href="css/connexus.css" rel="stylesheet">
@@ -68,10 +71,9 @@
         <h2 class="text-center text-lg-left">Streams I own</h2>
         <div class="stream-list-container">
           <form method="" action="" class="delete-form">
-            <table class="table table-striped table-responsive table-fullwidth">
+            <table id="table-streams-i-own" class="table table-striped table-responsive table-fullwidth">
               <thead class="thead-inverse">
                 <tr>
-                  <th>Id</th>
                   <th>Name</th>
                   <th class="text-center">Last New Picture</th>
                   <th class="text-center">Number of Pictures</th>
@@ -80,21 +82,18 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">1</th>
                   <td><a href="#">Stream #1</a></td>
                   <td class="text-center">06/02/2017</td>
                   <td class="text-center">34</td>
                   <td class="text-center"><input type="checkbox" name="delete-stream" value=""/></td>
                 </tr>
                 <tr>
-                  <th scope="row">2</th>
                   <td><a href="#">Stream Example 2</a></td>
                   <td class="text-center">07/12/2017</td>
                   <td class="text-center">21</td>
                   <td class="text-center"><input type="checkbox" name="delete-stream" value=""/></td>
                 </tr>
                 <tr>
-                  <th scope="row">3</th>
                   <td><a href="#">Third Stream</a></td>
                   <td class="text-center">09/22/2017</td>
                   <td class="text-center">43</td>
@@ -111,7 +110,7 @@
         <h2 class="text-center text-lg-left">Streams I subscribe to</h2>
         <div class="stream-list-container">
           <form method="" action="" class="unsubscribe-form">
-            <table class="table table-striped table-responsive table-fullwidth">
+            <table id="table-streams-i-subscribe" class="table table-striped table-responsive table-fullwidth">
               <thead class="thead-inverse">
                 <tr>
                   <th>Name</th>
@@ -166,9 +165,12 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="vendor/datatables/js/jquery.dataTables.min.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="vendor/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="js/connexus.js"></script>
 
   </body>
 
