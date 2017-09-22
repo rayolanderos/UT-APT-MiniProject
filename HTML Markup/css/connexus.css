@@ -36,6 +36,10 @@ body.login{
     margin-bottom: 30px;
 }
 
+.hidden{
+  display: none;
+}
+
 footer {
     position: absolute;
     bottom: 0;
@@ -150,6 +154,9 @@ label.main-label {
 .thumbnail {
     position: relative;
 }
+.img-thumbnail {
+    margin-bottom: 15px;
+}
 
 .caption {
     position: absolute;
@@ -163,6 +170,54 @@ label.main-label {
     padding: 5px 10px;
     display: inline-block;
     border-radius: 5px;
+}
+
+/********************
+     View Single
+*********************/
+#form-upload-container{
+  width: 50%
+}
+span.btn {
+    color: #111;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    border: 1px solid #dae0e5
+    ;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: .25rem;
+    transition: all .15s ease-in-out;
+}
+span.btn:hover {
+    color: #111;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#img-upload{
+    width: 100%;
 }
 
 /***********************
@@ -179,4 +234,7 @@ label.main-label {
   .form-signin {
     max-width: 80%;
   } 
+  #form-upload-container{
+    width: 100%
+  }
 }
