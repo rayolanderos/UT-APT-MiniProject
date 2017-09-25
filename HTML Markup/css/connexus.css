@@ -39,6 +39,9 @@ body.login{
 .hidden{
   display: none;
 }
+.full-width{
+  width: 100%;
+}
 
 footer {
     position: absolute;
