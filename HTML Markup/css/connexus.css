@@ -32,6 +32,10 @@ body.login{
     cursor: pointer;
 }
 
+.btn:disabled {
+    cursor: default;
+}
+
 .section {
     margin-bottom: 30px;
 }
@@ -168,6 +172,7 @@ label.main-label {
     width: 100%;
     text-align: center;
 }
+
 .caption span{
     background-color: rgba(255,255,255,0.8);
     padding: 5px 10px;
@@ -221,6 +226,18 @@ span.btn:hover {
 
 #img-upload{
     width: 100%;
+}
+
+/****************
+    Trending
+*****************/
+
+.trending-stream .caption{
+  top: 50%;
+}
+
+.trending-views{
+  font-size:13px;
 }
 
 /***********************
