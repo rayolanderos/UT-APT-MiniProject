@@ -83,6 +83,9 @@ footer p {
   font-size: 16px;
   font-size: 14px;
 }
+.form-signin p{
+  text-align: center;
+}
 .form-signin .form-control:focus {
   z-index: 2;
 }
@@ -91,6 +94,33 @@ footer p {
 }
 .form-signin input[type="password"] {
   margin-bottom: 30px;
+}
+
+.form-signin a.btn{
+  width: 50%;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  border-radius: .25rem;
+  transition: all .15s ease-in-out;
+  margin: 40px auto 0px;
+}
+.form-signin a.btn:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
 }
 
 /***************
