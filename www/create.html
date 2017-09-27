@@ -1,141 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
+{% block content %}
 
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Connexus - Create a Stream</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- FontAwesome CSS -->
-    <link href="vendor/fontawesome/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Bootstrap TagsInput -->
-    <link href="vendor/tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
-
-    <!-- Google Fonts CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/connexus.css" rel="stylesheet">
-
-  </head>
-
-  <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">Connex.us</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="manage.html">Manage</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="create.html">Create</a>
-              <span class="sr-only">(current)</span>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="view.html">View</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="search.html">Search</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="trending.html">Trending</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="social.html">Social</a>
-            </li>
-          </ul>
-        </div>
+<h1 class="text-center text-lg-left">Create a Stream</h1>
+<form method="POST" action="/create_stream" class="create-stream-form">
+  <div class="row">
+    <div class="col col-md">
+      <div class="form-group">
+        <label for="create-stream-name" class="main-label">Name your stream</label>
+        <input name="stream-name" type="text" class="form-control" id="create-stream-name" aria-describedby="stream-name-help" placeholder="Name">
+        <small id="stream-name-help" class="form-text text-muted">Use a creative, short name</small>
       </div>
-    </nav>
-
-    <!-- Page Content -->
-    <div class="container">
-
-      <h1 class="text-center text-lg-left">Create a Stream</h1>
-      <form method="" action="" class="create-stream-form">
-        <div class="row">
-          <div class="col col-md">
-            <div class="form-group">
-              <label for="stream-name" class="main-label">Name your stream</label>
-              <input type="text" class="form-control" id="create-stream-name" aria-describedby="stream-name-help" placeholder="Name">
-              <small id="stream-name-help" class="form-text text-muted">Use a creative, short name</small>
-            </div>
-            <div class="form-group">
-              <label class="main-label">Subscribers</label>
-              <label class="sub-label">Emails</label>
-              <select multiple="" data-role="tagsinput">
-                <option value="example@utexas.edu">example@utexas.edu</option>
-              </select>
-              <small id="stream-emails-help" class="form-text text-muted">Type the emails of your subscribers. Use commas to separate entries.</small>
-            </div>
-            <div class="form-group">
-              <label class="sub-label">Message</label>
-              <textarea class="form-control" id="create-stream-message" rows="3"></textarea>
-              <small id="stream-msg-help" class="form-text text-muted">Type a message for your invitations.</small>
-            </div>
-          </div>
-          <div class="col col-md">
-            <div class="form-group">
-              <label class="main-label">Tags</label>
-              <select multiple="" data-role="tagsinput">
-                <option value="#myFriends">#MyFriends</option>
-              </select>
-              <small id="stream-tags-help" class="form-text text-muted">Type the emails of your subscribers. Use commas to separate entries.</small>
-            </div>
-            <div class="form-group">
-              <label for="stream-name" class="main-label">Cover Image</label>
-              <input type="text" class="form-control" id="create-stream-cover" aria-describedby="stream-cover-help" placeholder="http://...">
-              <small id="stream-name-help" class="form-text text-muted">Provide the URL of your cover image. Not Required</small>
-            </div>
-              
-            
-          </div>
-        </div>
-        <button type="submit" class="btn btn-success pull-right"><i class="fa fa-plus-square" aria-hidden="true"></i> Create</button>
-        <div class="clear"></div>
-      </form>
+      <div class="form-group">
+        <label class="main-label">Subscribers</label>
+        <label class="sub-label" for="create-stream-subs-emails">Emails</label>
+        <select name="subscriber-emails" id="create-stream-subs-emails" multiple data-role="tagsinput">
+        </select>
+        <small id="stream-emails-help" class="form-text text-muted">Type the emails of your subscribers. Use commas to separate entries.</small>
+      </div>
+      <div class="form-group">
+        <label class="sub-label" for="create-stream-message">Message</label>
+        <textarea name="email-message" class="form-control" id="create-stream-message" rows="3"></textarea>
+        <small id="stream-msg-help" class="form-text text-muted">Type a message for your invitations.</small>
+      </div>
     </div>
-    <!-- /.container -->
-
-    <!-- Footer -->
-    <footer class="bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Green Team 2017</p>
+    <div class="col col-md">
+      <div class="form-group">
+        <label class="main-label" for="create-stream-tags">Tags</label>
+        <select multiple data-role="tagsinput" name="stream-tags" id="create-stream-tags">
+        </select>
+        <small id="stream-tags-help" class="form-text text-muted">Type the emails of your subscribers. Use commas to separate entries.</small>
       </div>
-      <!-- /.container -->
-    </footer>
+      <div class="form-group">
+        <label for="create-stream-cover" class="main-label">Cover Image</label>
+        <input name="stream-cover-url" type="text" class="form-control" id="create-stream-cover" aria-describedby="stream-cover-help" placeholder="http://...">
+        <small id="stream-name-help" class="form-text text-muted">Provide the URL of your cover image. Not Required</small>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success pull-right"><i class="fa fa-plus-square" aria-hidden="true"></i> Create</button>
+  <div class="clear"></div>
+</form>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/tagsinput/js/bootstrap-tagsinput.js"></script>
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="vendor/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-    <script type="text/javascript">
-      $(window).keydown(function(event){
-        if(event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
-    </script>
-
-  </body>
-
-</html>
+{% endblock %}

@@ -15,7 +15,6 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class ViewAll(webapp2.RequestHandler):
 
     def get(self):
-        print(self.uri_for('api-view-all'))
         result = urlfetch.fetch(self.uri_for('api-view-all', _full=True))
 
         if result.status_code == 200:
