@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="text-center text-lg-left">Create a Stream</h1>
+<form method="POST" action="/create_stream" class="create-stream-form">
+  <div class="row">
+    <div class="col col-md">
+      <div class="form-group">
+        <label for="create-stream-name" class="main-label">Name your stream</label>
+        <input name="stream-name" type="text" class="form-control" id="create-stream-name" aria-describedby="stream-name-help" placeholder="Name">
+        <small id="stream-name-help" class="form-text text-muted">Use a creative, short name</small>
+      </div>
+      <div class="form-group">
+        <label class="main-label">Subscribers</label>
+        <label class="sub-label" for="create-stream-subs-emails">Emails</label>
+        <select name="subscriber-emails" id="create-stream-subs-emails" multiple data-role="tagsinput">
+        </select>
+        <small id="stream-emails-help" class="form-text text-muted">Type the emails of your subscribers. Use commas to separate entries.</small>
+      </div>
+      <div class="form-group">
+        <label class="sub-label" for="create-stream-message">Message</label>
+        <textarea name="email-message" class="form-control" id="create-stream-message" rows="3"></textarea>
+        <small id="stream-msg-help" class="form-text text-muted">Type a message for your invitations.</small>
+      </div>
+    </div>
+    <div class="col col-md">
+      <div class="form-group">
+        <label class="main-label" for="create-stream-tags">Tags</label>
+        <select multiple data-role="tagsinput" name="stream-tags" id="create-stream-tags">
+        </select>
+        <small id="stream-tags-help" class="form-text text-muted">Add tags to your stream. Use commas to separate entries.</small>
+      </div>
+      <div class="form-group">
+        <label for="create-stream-cover" class="main-label">Cover Image</label>
+        <input name="stream-cover-url" type="text" class="form-control" id="create-stream-cover" aria-describedby="stream-cover-help" placeholder="http://...">
+        <small id="stream-name-help" class="form-text text-muted">Provide the URL of your cover image. Not Required</small>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success pull-right"><i class="fa fa-plus-square" aria-hidden="true"></i> Create</button>
+  <div class="clear"></div>
+</form>
+
+{% endblock %}

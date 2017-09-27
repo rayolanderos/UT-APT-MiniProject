@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="text-center text-lg-left">View All Streams</h1>
+
+<div class="row text-center text-lg-left">
+
+  {% for stream in streams %}
+  <div class="col-lg-3 col-md-4 col-xs-6">
+    <a href="view-single?id={{ stream.id }}" class="d-block mb-4 h-100">
+      {% if stream.cover != None %}
+      <img class="img-fluid img-thumbnail" src="{{ stream.cover_url|safe }}" alt="">
+      {% else %}
+      <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+      {% endif %}
+      <div class="caption">
+        <span>{{ stream.name }}</span>
+      </div>
+    </a>
+    {{ stream.tags }}
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}

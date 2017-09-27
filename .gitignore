@@ -1,0 +1,8 @@
+# Python compiled code
+*.pyc
+
+# OS X files
+.DS_Store
+
+# VS code
+.vscode
