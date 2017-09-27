@@ -5,6 +5,9 @@ import os
 import logging
 
 from google.appengine.api import urlfetch
+from google.appengine.api import users
+from google.appengine.api import mail
+from google.appengine.api import app_identity
 
 templates_dir = os.path.normpath(os.path.dirname(__file__) + '/../www/')
 
@@ -13,11 +16,14 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+
+DEFAULT_EMAIL_MESSAGE = 'Hi! Plase subscribe to my new connexus stream.'
+
 class Create(webapp2.RequestHandler):
 
     def post(self):
         stream_name = self.request.get('stream-name')
-        invite_message = self.request.get('email-message')
+        invite_message = self.request.get('email-message', DEFAULT_EMAIL_MESSAGE)
         subs_emails = self.request.get_all('subscriber-emails')
         stream_tags = self.request.get_all('stream-tags')
         cover_url = self.request.get('stream-cover-url')
@@ -39,8 +45,33 @@ class Create(webapp2.RequestHandler):
         )
 
         logging.info('Post Results: %s', result)
+        logging.info('Headers: %s', result.headers)
+        logging.info('Content: %s', result.content)
+        self.send_invitation_emails(subs_emails, result.headers['location'], invite_message)
         self.redirect('/manage')
 
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('create.html')
         self.response.write(template.render({}))
+
+
+    def send_invitation_emails(self, emails, stream_url, message):
+
+        email_content = '{0}\nYou can find the stream <a href="{1}">here.</a>'.format(message, stream_url)
+
+        logging.info(email_content)
+
+        sender_address = '{}@appspot.gserviceaccount.com'.format(app_identity.get_application_id())
+        for email in emails:
+            email_message = mail.EmailMessage(
+                sender=sender_address,
+                subject='Subscribe to my Connexus stream'
+            )
+
+            email_message.to = email
+            email_message.body = message
+
+            email_message.send()
+
+
+        pass

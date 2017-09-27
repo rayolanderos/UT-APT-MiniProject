@@ -20,4 +20,4 @@ class CreateStream(webapp2.RequestHandler):
         stream = Stream(name=stream_name, cover_url=stream_cover_url, tags=tags)
         stream_key = stream.put()
 
-        #TODO Send emails!
+        self.response.location = '/view?id={0}'.format(stream_key.id())
