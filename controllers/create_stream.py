@@ -22,6 +22,10 @@ DEFAULT_EMAIL_MESSAGE = 'Hi! Plase subscribe to my new connexus stream.'
 class Create(webapp2.RequestHandler):
 
     def post(self):
+        user = users.get_current_user()
+        email_address = user.email()
+        logging.info(email_address)
+
         stream_name = self.request.get('stream-name')
         invite_message = self.request.get('email-message', DEFAULT_EMAIL_MESSAGE)
         subs_emails = self.request.get_all('subscriber-emails')
@@ -35,7 +39,6 @@ class Create(webapp2.RequestHandler):
 
         
         create_api_uri = self.uri_for('api-create-stream', _full=True)
-        logging.info(create_api_uri)
 
         result = urlfetch.fetch(
             url=create_api_uri,
@@ -44,10 +47,7 @@ class Create(webapp2.RequestHandler):
             headers= {'Content-Type': 'application/json'}
         )
 
-        logging.info('Post Results: %s', result)
-        logging.info('Headers: %s', result.headers)
-        logging.info('Content: %s', result.content)
-        self.send_invitation_emails(subs_emails, result.headers['location'], invite_message)
+        self.send_invitation_emails(email_address, subs_emails, result.headers['location'], invite_message)
         self.redirect('/manage')
 
     def get(self):
@@ -55,22 +55,20 @@ class Create(webapp2.RequestHandler):
         self.response.write(template.render({}))
 
 
-    def send_invitation_emails(self, emails, stream_url, message):
+    def send_invitation_emails(self, sender, emails, stream_url, message):
 
-        email_content = '{0}\nYou can find the stream <a href="{1}">here.</a>'.format(message, stream_url)
+        email_content = '{0}\nYou can find the stream here: {1}'.format(message, stream_url)
+        html_email_content = '{0}\nYou can find the stream <a href="{1}">here.</a>'.format(message, stream_url)
 
-        logging.info(email_content)
-
-        sender_address = '{}@appspot.gserviceaccount.com'.format(app_identity.get_application_id())
         for email in emails:
             email_message = mail.EmailMessage(
-                sender=sender_address,
+                sender=sender,
                 subject='Subscribe to my Connexus stream'
             )
 
             email_message.to = email
-            email_message.body = message
-
+            email_message.body = email_content
+            email_message.html = html_email_content
             email_message.send()
 
 
