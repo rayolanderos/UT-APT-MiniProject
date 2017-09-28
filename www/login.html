@@ -22,16 +22,11 @@
 
   <body class="login">
 
-    <div class="container">
+    <div id="" class="container center form-signin">
 
-      <form class="form-signin">
         <h2 class="form-signin-heading">Welcome to Connexus</h2>
-        <label for="inputEmail" class="sr-only">Gmail User Id</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Gmail User Id" required autofocus name="userId">
-        <label for="inputPassword" class="sr-only">Gmail Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Gmail Password" required name="password">
-        <button class="btn btn-md btn-primary btn-block" type="submit">Log In</button>
-      </form>
+        <p>{{ greeting }}</p>
+        <a class="btn btn-md btn-primary btn-block" href="{{ login_url }}">Log In</a>
 
     </div> <!-- /container -->
 
