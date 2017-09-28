@@ -15,7 +15,7 @@ from services import view_all as ViewAllService
 from services import manage as ManageService
 from services import stream_service
 
-templates_dir = os.path.normpath(os.path.dirname(__file__) + '/../www/')
+templates_dir = os.path.normpath(os.path.dirname(__file__) + '/www/')
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(templates_dir),
