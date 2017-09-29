@@ -9,22 +9,25 @@
     <meta name="author" content="">
     <link rel="icon" href="img/favicon.ico">
 
-    <title>Connexus - View All Streams</title>
+    <title>Connexus - {{ page_name.capitalize() }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- FontAwesome CSS -->
-    <link href="vendor/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link type="text/css" href="vendor/fontawesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Bootstrap TagsInput -->
-    <link href="vendor/tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link type="text/css" href="vendor/tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+
+    <!-- DataTables -->
+    <link type="text/css" href="vendor/datatables/css/jquery.dataTables.css" rel="stylesheet">
 
     <!-- Google Fonts CSS -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/connexus.css" rel="stylesheet">
+    <link type="text/css" href="css/connexus.css" rel="stylesheet">
 
   </head>
 
@@ -39,24 +42,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="manage">Manage</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="create_stream">Create</a>
-            </li>
+            {% if page_name == 'manage': %}
             <li class="nav-item active">
-              <a class="nav-link" href="view">View</a>
+              <a class="nav-link" href="/manage">Manage</a>
               <span class="sr-only">(current)</span>
             </li>
+            {% else: %}
             <li class="nav-item">
-              <a class="nav-link" href="search">Search</a>
+              <a class="nav-link" href="/manage">Manage</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="/create_stream">Create</a>
+            </li>
+            {% if page_name == 'view' or page_name == 'view_all': %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/view_all">View</a>
+              <span class="sr-only">(current)</span>
+            </li>
+            {% else: %}
+            <li class="nav-item">
+              <a class="nav-link" href="/view_all">View</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="/search">Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="trending">Trending</a>
+              <a class="nav-link" href="/trending">Trending</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="social">Social</a>
+              <a class="nav-link" href="{{ logout_url }}">Logout</a>
             </li>
           </ul>
         </div>
@@ -87,7 +103,71 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="vendor/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+    {% if page_name == 'manage' : %}
+      <script type="text/javascript" charset="utf8" src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+      <script type="text/javascript">
+        $(function() {
 
+          $('#table-streams-i-own').DataTable( {
+              searching: false,
+              ordering:  true, 
+              paging: false
+          } );
+
+          $('#table-streams-i-subscribe').DataTable( {
+              searching: false,
+              ordering:  true, 
+              paging: false
+          } );
+            
+        });
+
+      </script>
+    {% endif %}
+    {% if page_name == 'view' : %}
+      <script type="text/javascript">
+        $(document).ready( function() {
+          $(document).on('change', '.btn-file :file', function() {
+            var input = $(this),
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [label]);
+            });
+
+            $('.btn-file :file').on('fileselect', function(event, label) {
+                
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = label;
+                
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+              
+          });
+          function readURL(input) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+                  
+                  reader.onload = function (e) {
+                      $('#img-upload').attr('src', e.target.result);
+                  }
+                  
+                  reader.readAsDataURL(input.files[0]);
+              }
+          }
+
+          $("#imgInp").change(function(){
+              readURL(this);
+          });   
+        });
+
+        function show(elem){
+          $(elem).fadeIn();
+        }
+
+      </script>
+      {% endif %}
   </body>
 
 </html>

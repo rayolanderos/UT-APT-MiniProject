@@ -9,6 +9,8 @@ class CreateStream(webapp2.RequestHandler):
     def post(self):
 
         json_string = self.request.body
+        logging.info("json-string")
+        logging.info(json_string)
         dict_object = json.loads(json_string)
 
         stream_name = dict_object['name']
