@@ -22,9 +22,10 @@ class Manage(webapp2.RequestHandler):
         if result.status_code == 200:
             logout_url = users.create_logout_url('/')
             j = json.loads(result.content)
-            streams_data = {
+            page_data = {
             'streams': j, 
-            'logout_url': logout_url
+            'logout_url': logout_url, 
+            'page_name': 'manage'
             }
             template = JINJA_ENVIRONMENT.get_template('manage.html')
-            self.response.write(template.render(streams_data))
+            self.response.write(template.render(page_data))

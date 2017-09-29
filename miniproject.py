@@ -9,9 +9,11 @@ import webapp2
 from controllers import view_all
 from controllers import create_stream
 from controllers import manage
+from controllers import view
 
 
 from services import view_all as ViewAllService
+from services import view as ViewService
 from services import manage as ManageService
 from services import stream_service
 
@@ -32,7 +34,7 @@ class MainPage(webapp2.RequestHandler):
             logout_url = users.create_logout_url('/')
             greeting = 'Welcome, {}! (<a href="{}">sign out</a>)'.format(
                 nickname, logout_url)
-            view = 'manage.html'
+            
             template_values = {
                 'user': user,
                 'greeting': greeting,
@@ -59,5 +61,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/api/view_all', ViewAllService.ViewAll, name='api-view-all'),
     webapp2.Route('/manage', manage.Manage, name='manage'),
     webapp2.Route('/api/manage', ManageService.Manage, name='api-manage'),
-    webapp2.Route('/api/create_stream', stream_service.CreateStream, name='api-create-stream')
+    webapp2.Route('/api/create_stream', stream_service.CreateStream, name='api-create-stream'),
+    webapp2.Route('/view', view.View, name='view'),
+    webapp2.Route('/api/view', ViewService.View, name='api-view')
 ], debug=True)
