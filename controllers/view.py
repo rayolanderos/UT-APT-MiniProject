@@ -6,6 +6,7 @@ import logging
 
 from google.appengine.api import urlfetch
 from google.appengine.api import users
+from google.appengine.ext import blobstore
 
 templates_dir = os.path.normpath(os.path.dirname(__file__) + '/../www/')
 
@@ -23,9 +24,9 @@ class View(webapp2.RequestHandler):
 
         if not stream_id :
             page_data = { 
-            'logout_url': logout_url, 
-            'page_name': 'view',
-            'error_msg': 'The stream you are trying to access does not exist. It may have been removed by the owner.'
+                'logout_url': logout_url, 
+                'page_name': 'view',
+                'error_msg': 'The stream you are trying to access does not exist. It may have been removed by the owner.'
             }
             template = JINJA_ENVIRONMENT.get_template('error.html')
             self.response.write(template.render(page_data))
@@ -42,22 +43,25 @@ class View(webapp2.RequestHandler):
 
             if result.status_code == 200:
                 j = json.loads(result.content)
-                logging.info('*****************')
-                logging.info( j.get('id') )
-                logging.info('*****************')
                 if not j.get('id'):
                     page_data = { 
-                    'logout_url': logout_url, 
-                    'page_name': 'view',
-                    'error_msg': 'The stream you are trying to access does not exist. It may have been removed by the owner.'
+                        'logout_url': logout_url, 
+                        'page_name': 'view',
+                        'error_msg': 'The stream you are trying to access does not exist. It may have been removed by the owner.'
                     }
                     template = JINJA_ENVIRONMENT.get_template('error.html')
                     self.response.write(template.render(page_data))
                 else:
+                    upload_url = blobstore.create_upload_url('/upload_photo')
                     page_data = {
-                    'stream': j, 
-                    'logout_url': logout_url, 
-                    'page_name': 'view'
+                        'stream': j, 
+                        'logout_url': logout_url, 
+                        'page_name': 'view',
+                        'upload_url': upload_url
                     }
                     template = JINJA_ENVIRONMENT.get_template('view-single.html')
                     self.response.write(template.render(page_data))
+
+    def post(self):
+        # TODO handle
+        pass
