@@ -31,15 +31,11 @@ class View(webapp2.RequestHandler):
             template = JINJA_ENVIRONMENT.get_template('error.html')
             self.response.write(template.render(page_data))
         else : 
-            view_api_uri = self.uri_for('api-view', _full=True)
+            view_api_uri = '{}?id={}'.format(self.uri_for('api-view', _full=True), stream_id)
             stream_data = { 'id': stream_id }
             json_data = json.dumps(stream_data);
 
-            result = urlfetch.fetch(
-                url = view_api_uri, 
-                payload=json_data,
-                method=urlfetch.POST,
-                headers= {'Content-Type': 'application/json'})
+            result = urlfetch.fetch(url = view_api_uri)
 
             if result.status_code == 200:
                 j = json.loads(result.content)

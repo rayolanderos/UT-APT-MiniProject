@@ -8,13 +8,8 @@ from models.stream import Stream
 
 class View(webapp2.RequestHandler):
 
-    def post(self):
-        
-        json_string = self.request.body
-
-        dict_object = json.loads(json_string)
-
-        stream_id = int(dict_object['id'])
+    def get(self):
+        stream_id = int(self.request.get('id'))
 
         self.response.headers['Content-Type'] = 'application/json'
         stream = Stream.get_by_id(stream_id)
