@@ -52,7 +52,7 @@ class Create(webapp2.RequestHandler):
 
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('create.html')
-        self.response.write(template.render({}))
+        self.response.write(template.render({'page_name': 'create'}))
 
 
     def send_invitation_emails(self, sender, emails, stream_url, message):
