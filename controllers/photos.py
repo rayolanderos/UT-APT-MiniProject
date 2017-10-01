@@ -2,24 +2,30 @@ import webapp2
 import logging
 import sys
 
+from models.stream import Stream
+
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 
 class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
         try:
-            upload = self.get_uploads()[0]
-            self.redirect('/view_photo/%s' % upload.key())
+            uploads = self.get_uploads()
+            if len(uploads) > 0:
+                upload = uploads[0]
+                stream_id = int(self.request.get('stream_id'))
+                stream = Stream.get_by_id(stream_id)
+
+                stream.photos.insert(0, upload.key())
+                stream.put()
+            else:
+                # TODO display an error message
+                pass
+
+            view_uri = '{}?id={}'.format(self.uri_for('view'), stream_id)
+            self.redirect(view_uri)
 
         except:
             e = sys.exc_info()[0]
-            logging.info(e)
+            logging.exception(e)
             self.error(500)
-
-
-class ViewPhotoHandler(blobstore_handlers.BlobstoreDownloadHandler):
-    def get(self, photo_key):
-        if not blobstore.get(photo_key):
-            self.error(404)
-        else:
-            self.send_blob(photo_key)

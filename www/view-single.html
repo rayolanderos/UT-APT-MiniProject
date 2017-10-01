@@ -4,31 +4,11 @@
       <h1 class="text-center text-lg-left">{{ stream.name }}</h1>
       <div class="section">
         <div class="row text-center text-lg-left">
-
+          {% for photo_url in stream.photos %}
           <div class="col-lg-3 col-md-4 col-xs-6">
-            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            <div class="caption">
-              <span>Image 4</span>
-            </div>
+              <img class="img-fluid img-thumbnail" src="{{ photo_url|safe }}" alt="">
           </div>
-          <div class="col-lg-3 col-md-4 col-xs-6">
-            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            <div class="caption">
-              <span>Image 3</span>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-xs-6">
-            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            <div class="caption">
-              <span>Image 2</span>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-xs-6">
-            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
-            <div class="caption">
-              <span>Image 1</span>
-            </div>
-          </div>
+          {% endfor %}
         </div>
         <div class="button-container">
           <button type="submit" class="btn btn-info pull-left" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i> Previous</button>
@@ -39,6 +19,7 @@
       <div id="section">
         <div id="form-upload-container" class="hidden">
           <form id="form-upload" method="POST" enctype="multipart/form-data" action="{{ upload_url }}">
+            <input type="hidden" name="stream_id" value="{{ stream.id }}"/>
             <div class="form-group">
               <label>Comments</label>
               <textarea class="form-control" id="upload-comments" rows="3"></textarea>
@@ -49,14 +30,14 @@
               <div class="input-group">
                   <span class="input-group-btn">
                       <span class="btn btn-default btn-file">
-                          Browse… <input type="file" id="imgInp">
+                          Browse… <input type="file" id="imgInp" name="file">
                       </span>
                   </span>
                   <input type="text" class="form-control" readonly>
               </div>
               <img id='img-upload'/>
             </div> 
-            <button type="submit" class="btn btn-success pull-right"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Image</button>
+            <button name="submit" type="submit" class="btn btn-success pull-right"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Image</button>
             <div class="clear"></div>
           </form>
         </div>

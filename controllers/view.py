@@ -53,8 +53,9 @@ class View(webapp2.RequestHandler):
                     self.response.write(template.render(page_data))
                 else:
                     upload_url = blobstore.create_upload_url('/upload_photo')
+                    logging.info(j)
                     page_data = {
-                        'stream': j, 
+                        'stream': j,
                         'logout_url': logout_url, 
                         'page_name': 'view',
                         'upload_url': upload_url

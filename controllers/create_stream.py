@@ -17,7 +17,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 
-DEFAULT_EMAIL_MESSAGE = 'Hi! Plase subscribe to my new connexus stream.'
+DEFAULT_EMAIL_MESSAGE = 'Hi! Please subscribe to my new connexus stream.'
 
 class Create(webapp2.RequestHandler):
 

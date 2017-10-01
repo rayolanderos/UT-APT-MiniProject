@@ -44,7 +44,7 @@ class MainPage(webapp2.RequestHandler):
 
         else:
             login_url = users.create_login_url('/')
-            greeting = 'Plase log in to continue using the app'
+            greeting = 'Please log in to continue using the app'
 
             template_values = {
                 'greeting': greeting,
@@ -64,7 +64,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/api/create_stream', stream_service.CreateStream, name='api-create-stream'),
     webapp2.Route('/view', view.View, name='view'),
     webapp2.Route('/api/view', ViewService.View, name='api-view'),
-    webapp2.Route('/upload_photo', photos.PhotoUploadHandler, name='upload-photo'),
-    webapp2.Route('/view_photo/([^/]+)?', photos.ViewPhotoHandler, name='view-photo')
+    webapp2.Route('/upload_photo', photos.PhotoUploadHandler, name='upload-photo')
 
 ], debug=True)
