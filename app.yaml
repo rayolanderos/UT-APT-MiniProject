@@ -9,6 +9,9 @@ handlers:
 - url: /css
   static_dir: www/css
 
+- url: /js
+  static_dir: www/js
+
 - url: /.*
   script: miniproject.app
 
