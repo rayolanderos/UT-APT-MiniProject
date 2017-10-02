@@ -8,4 +8,6 @@ class Stream(ndb.Model):
     photos = ndb.BlobKeyProperty(repeated=True)
     tags = ndb.StringProperty(repeated=True)
     date = ndb.DateTimeProperty(auto_now_add=True)
+    owner = ndb.StringProperty()
+    views = ndb.IntegerProperty()
     

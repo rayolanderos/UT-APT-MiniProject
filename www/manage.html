@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-      <h1 class="text-center text-lg-left">Manage Streams {{ url_result }} </h1>
+      <h1 class="text-center text-lg-left">Manage Streams </h1>
 
       <div class="section">
         <h2 class="text-center text-lg-left">Streams I own</h2>
@@ -17,24 +17,14 @@
                 </tr>
               </thead>
               <tbody>
+              {% for stream_own in streams_own %}
                 <tr>
-                  <td><a href="#">Stream #1</a></td>
-                  <td class="text-center">06/02/2017</td>
-                  <td class="text-center">34</td>
-                  <td class="text-center"><input type="checkbox" name="delete-stream" value="1"/></td>
+                  <td><a href="/view?id={{ stream_own.id }}">{{ stream_own.name }}</a></td>
+                  <td class="text-center">{{ stream_own.date }}</td>
+                  <td class="text-center">{{ stream_own.photo_count }}</td>
+                  <td class="text-center"><input type="checkbox" name="delete-stream" value="{{ stream_own.id }}"/></td>
                 </tr>
-                <tr>
-                  <td><a href="#">Stream Example 2</a></td>
-                  <td class="text-center">07/12/2017</td>
-                  <td class="text-center">21</td>
-                  <td class="text-center"><input type="checkbox" name="delete-stream" value="2"/></td>
-                </tr>
-                <tr>
-                  <td><a href="#">Third Stream</a></td>
-                  <td class="text-center">09/22/2017</td>
-                  <td class="text-center">43</td>
-                  <td class="text-center"><input type="checkbox" name="delete-stream" value="3"/></td>
-                </tr>
+              {% endfor %}
               </tbody>
             </table>
             <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>

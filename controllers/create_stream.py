@@ -31,11 +31,13 @@ class Create(webapp2.RequestHandler):
         subs_emails = self.request.get_all('subscriber-emails')
         stream_tags = self.request.get_all('stream-tags')
         cover_url = self.request.get('stream-cover-url')
+        owner_email = self.request.get('stream-owner')
         stream_data = { 'name': stream_name,
                         'emails': subs_emails, 
                         'email_message': invite_message, 
                         'tags': stream_tags,
-                        'cover_url': cover_url}
+                        'cover_url': cover_url, 
+                        'owner': owner_email }
 
         
         create_api_uri = self.uri_for('api-create-stream', _full=True)
@@ -51,8 +53,11 @@ class Create(webapp2.RequestHandler):
         self.redirect('/manage')
 
     def get(self):
+        user = users.get_current_user()
         template = JINJA_ENVIRONMENT.get_template('create.html')
-        self.response.write(template.render({'page_name': 'create'}))
+        page_data = {   'page_name': 'create', 
+                        'user': user}
+        self.response.write(template.render(page_data))
 
 
     def send_invitation_emails(self, sender, emails, stream_url, message):
