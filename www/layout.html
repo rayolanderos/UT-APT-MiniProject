@@ -89,71 +89,7 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="vendor/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-    {% if page_name == 'manage' : %}
-      <script type="text/javascript" charset="utf8" src="vendor/datatables/js/jquery.dataTables.min.js"></script>
-      <script type="text/javascript">
-        $(function() {
-
-          $('#table-streams-i-own').DataTable( {
-              searching: false,
-              ordering:  true, 
-              paging: false
-          } );
-
-          $('#table-streams-i-subscribe').DataTable( {
-              searching: false,
-              ordering:  true, 
-              paging: false
-          } );
-            
-        });
-
-      </script>
-    {% endif %}
-    {% if page_name == 'view' : %}
-      <script type="text/javascript">
-        $(document).ready( function() {
-          $(document).on('change', '.btn-file :file', function() {
-            var input = $(this),
-              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [label]);
-            });
-
-            $('.btn-file :file').on('fileselect', function(event, label) {
-                
-                var input = $(this).parents('.input-group').find(':text'),
-                    log = label;
-                
-                if( input.length ) {
-                    input.val(log);
-                } else {
-                    if( log ) alert(log);
-                }
-              
-          });
-          function readURL(input) {
-              if (input.files && input.files[0]) {
-                  var reader = new FileReader();
-                  
-                  reader.onload = function (e) {
-                      $('#img-upload').attr('src', e.target.result);
-                  }
-                  
-                  reader.readAsDataURL(input.files[0]);
-              }
-          }
-
-          $("#imgInp").change(function(){
-              readURL(this);
-          });   
-        });
-
-        function show(elem){
-          $(elem).fadeIn();
-        }
-
-      </script>
-      {% endif %}
+    {% block scripts %} {% endblock %}
   </body>
 
 </html>

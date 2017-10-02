@@ -17,7 +17,7 @@ class CreateStream(webapp2.RequestHandler):
         emails = dict_object['emails']
         email_message = dict_object['email_message']
 
-        stream = Stream(name=stream_name, cover_url=stream_cover_url, tags=tags)
+        stream = Stream(name=stream_name, cover_url=stream_cover_url, tags=tags, photos=[])
         stream_key = stream.put()
 
         self.response.location = '/view?id={0}'.format(stream_key.id())

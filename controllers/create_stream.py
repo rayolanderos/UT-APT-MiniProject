@@ -17,7 +17,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 
-DEFAULT_EMAIL_MESSAGE = 'Hi! Plase subscribe to my new connexus stream.'
+DEFAULT_EMAIL_MESSAGE = 'Hi! Please subscribe to my new connexus stream.'
 
 class Create(webapp2.RequestHandler):
 
@@ -52,7 +52,7 @@ class Create(webapp2.RequestHandler):
 
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('create.html')
-        self.response.write(template.render({}))
+        self.response.write(template.render({'page_name': 'create'}))
 
 
     def send_invitation_emails(self, sender, emails, stream_url, message):
