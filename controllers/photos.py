@@ -1,6 +1,7 @@
 import webapp2
 import logging
 import sys
+import datetime
 
 from models.stream import Stream
 
@@ -17,6 +18,7 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
                 stream = Stream.get_by_id(stream_id)
 
                 stream.photos.insert(0, upload.key())
+                stream.date = datetime.datetime.now()
                 stream.put()
             else:
                 # TODO display an error message

@@ -15,6 +15,11 @@ class View(webapp2.RequestHandler):
         stream = Stream.get_by_id(stream_id)
         
         if stream != None :
+            if not stream.views :
+                stream.views = 1
+            else:
+                stream.views = stream.views+1
+            stream.put()
             photos_urls = [images.get_serving_url(photo_key) for photo_key in stream.photos]
             stream_data = {
             'id': stream.key.id(), 

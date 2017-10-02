@@ -2,6 +2,7 @@ import webapp2
 import jinja2
 import json
 import os
+import logging
 
 from google.appengine.api import urlfetch
 from google.appengine.api import users
@@ -16,14 +17,51 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class Manage(webapp2.RequestHandler):
 
     def get(self):
-        print(self.uri_for('api-manage'))
-        result = urlfetch.fetch(self.uri_for('api-manage', _full=True))
+        user = users.get_current_user()
+        manage_api_uri = '{}?type=own&user={}'.format(self.uri_for('api-manage', _full=True), user)
+           
+        result = urlfetch.fetch(url = manage_api_uri)
 
         if result.status_code == 200:
             logout_url = users.create_logout_url('/')
             j = json.loads(result.content)
             page_data = {
-            'streams': j, 
+            'streams_own': j, 
+            'streams_subscribe': j, 
+            'logout_url': logout_url, 
+            'page_name': 'manage'
+            }
+            template = JINJA_ENVIRONMENT.get_template('manage.html')
+            self.response.write(template.render(page_data))
+
+    def post(self):
+        
+        stream_delete = self.request.get_all('delete-stream')
+
+        logging.info("Going to delete")
+
+        delete_api_uri = self.uri_for('api-delete-stream', _full=True)
+
+        result = urlfetch.fetch(
+            url=delete_api_uri,
+            payload=json.dumps(stream_delete),
+            method=urlfetch.POST,
+            headers= {'Content-Type': 'application/json'}
+        )
+        logging.info("result")
+        logging.info(result)
+
+
+        user = users.get_current_user()
+        manage_api_uri = '{}?type=own&user={}'.format(self.uri_for('api-manage', _full=True), user)
+        result = urlfetch.fetch(url = manage_api_uri)
+
+        if result.status_code == 200:
+            logout_url = users.create_logout_url('/')
+            j = json.loads(result.content)
+            page_data = {
+            'streams_own': j, 
+            'streams_subscribe': j, 
             'logout_url': logout_url, 
             'page_name': 'manage'
             }

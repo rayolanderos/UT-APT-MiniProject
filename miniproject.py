@@ -16,6 +16,7 @@ from services import view_all as ViewAllService
 from services import view as ViewService
 from services import manage as ManageService
 from services import stream_service
+from services import delete as DeleteService
 
 templates_dir = os.path.normpath(os.path.dirname(__file__) + '/www/')
 
@@ -62,6 +63,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manage', manage.Manage, name='manage'),
     webapp2.Route('/api/manage', ManageService.Manage, name='api-manage'),
     webapp2.Route('/api/create_stream', stream_service.CreateStream, name='api-create-stream'),
+    webapp2.Route('/api/delete_stream', DeleteService.DeleteStream, name='api-delete-stream'),
     webapp2.Route('/view', view.View, name='view'),
     webapp2.Route('/api/view', ViewService.View, name='api-view'),
     webapp2.Route('/upload_photo', photos.PhotoUploadHandler, name='upload-photo')
