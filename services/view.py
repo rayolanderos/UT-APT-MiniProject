@@ -1,8 +1,11 @@
 import webapp2
 import json
 import logging
+import datetime
+
 from google.appengine.ext import ndb
 from google.appengine.api import images
+
 
 from models.stream import Stream
 
@@ -13,12 +16,17 @@ class View(webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'application/json'
         stream = Stream.get_by_id(stream_id)
+        now = datetime.datetime.now()
         
         if stream != None :
             if not stream.views :
-                stream.views = 1
-            else:
-                stream.views = stream.views+1
+                stream.views = 0
+                
+            if not stream.views_list :
+                stream.views_list = []
+                
+            stream.views = stream.views+1
+            stream.views_list.insert(0, now)
             stream.put()
             photos_urls = [images.get_serving_url(photo_key) for photo_key in stream.photos]
             stream_data = {

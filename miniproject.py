@@ -9,12 +9,15 @@ import webapp2
 from controllers import view_all
 from controllers import create_stream
 from controllers import manage
+from controllers import trending
 from controllers import view
 from controllers import photos
 
 from services import view_all as ViewAllService
 from services import view as ViewService
 from services import manage as ManageService
+from services import trending as TrendingService
+from services import generate_trending 
 from services import stream_service
 from services import delete as DeleteService
 
@@ -61,7 +64,10 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/create_stream', create_stream.Create, name='create-stream'),
     webapp2.Route('/api/view_all', ViewAllService.ViewAll, name='api-view-all'),
     webapp2.Route('/manage', manage.Manage, name='manage'),
+    webapp2.Route('/trending', trending.Trending, name='trending'),
     webapp2.Route('/api/manage', ManageService.Manage, name='api-manage'),
+    webapp2.Route('/api/trending', TrendingService.Trending, name='api-trending'),
+    webapp2.Route('/api/generate_trending', generate_trending.GenerateTrending, name='api-generate-trending'),
     webapp2.Route('/api/create_stream', stream_service.CreateStream, name='api-create-stream'),
     webapp2.Route('/api/delete_stream', DeleteService.DeleteStream, name='api-delete-stream'),
     webapp2.Route('/view', view.View, name='view'),

@@ -1,0 +1,4 @@
+cron:
+- description: trending update job
+  url: /api/generate_trending
+  schedule: every 5 minutes
