@@ -38,8 +38,6 @@ class Manage(webapp2.RequestHandler):
         
         stream_delete = self.request.get_all('delete-stream')
 
-        logging.info("Going to delete")
-
         delete_api_uri = self.uri_for('api-delete-stream', _full=True)
 
         result = urlfetch.fetch(
@@ -48,8 +46,6 @@ class Manage(webapp2.RequestHandler):
             method=urlfetch.POST,
             headers= {'Content-Type': 'application/json'}
         )
-        logging.info("result")
-        logging.info(result)
 
 
         user = users.get_current_user()

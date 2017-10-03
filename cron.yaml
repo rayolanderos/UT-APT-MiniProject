@@ -1,0 +1,13 @@
+cron:
+- description: trending update job
+  url: /api/generate_trending
+  schedule: every 5 minutes
+- description: User Reporting 5 minutes
+  url: /api/send_user_report?rate=1
+  schedule: every 5 minutes
+- description: User Reporting 1 hour
+  url: /api/send_user_report?rate=2
+  schedule: every 1 hours
+- description: User Reporting 1 day
+  url: /api/send_user_report?rate=3
+  schedule: every 24 hours

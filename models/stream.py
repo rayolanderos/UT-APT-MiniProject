@@ -10,4 +10,7 @@ class Stream(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
     owner = ndb.StringProperty()
     views = ndb.IntegerProperty()
+    views_list = ndb.DateTimeProperty(auto_now_add=False, repeated=True)
+    views_list_size = ndb.IntegerProperty()
+    trending_rank = ndb.IntegerProperty()
     
