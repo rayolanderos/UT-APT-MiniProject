@@ -32,7 +32,5 @@ class GenerateTrending(webapp2.RequestHandler):
         ordered_streams[1].put()
         ordered_streams[2].trending_rank = 3
         ordered_streams[2].put()
-        
-        print(stream_list)
-
+    
         self.response.out.write(json.dumps(stream_list))

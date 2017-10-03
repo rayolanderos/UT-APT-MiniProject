@@ -20,9 +20,5 @@ class UpdateUserReport(webapp2.RequestHandler):
             user.report = report_rate
             user.put()
         
-        
-        res = { "msg" : "user updated", "success": True }
-
-        self.response.out.write(json.dumps(res))
 
         
