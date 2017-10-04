@@ -24,7 +24,6 @@ class Create(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
         email_address = user.email()
-        logging.info(email_address)
 
         stream_name = self.request.get('stream-name')
         invite_message = self.request.get('email-message', DEFAULT_EMAIL_MESSAGE)
@@ -48,9 +47,22 @@ class Create(webapp2.RequestHandler):
             method=urlfetch.POST,
             headers= {'Content-Type': 'application/json'}
         )
-
-        self.send_invitation_emails(email_address, subs_emails, result.headers['location'], invite_message)
-        self.redirect('/manage')
+        if result.status_code == 200:
+            response = json.loads(result.content)
+            user = users.get_current_user()
+            
+            if response['success'] : 
+                self.send_invitation_emails(email_address, subs_emails, response['stream_url'], invite_message)
+                self.redirect('/manage')
+            else: 
+                logout_url = users.create_logout_url('/')
+                page_data = { 
+                    'logout_url': logout_url, 
+                    'page_name': 'create',
+                    'error_msg': response['msg']
+                }
+                template = JINJA_ENVIRONMENT.get_template('error.html')
+                self.response.write(template.render(page_data))
 
     def get(self):
         user = users.get_current_user()

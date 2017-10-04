@@ -45,16 +45,16 @@
             <li class="nav-item {% if page_name == 'manage': %} active {% endif %}">
               <a class="nav-link" href="/manage">Manage</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if page_name == 'create': %} active {% endif %}">
               <a class="nav-link" href="/create_stream">Create</a>
             </li>
             <li class="nav-item {% if page_name == 'view' or page_name == 'view_all': %} active {% endif %}">
               <a class="nav-link" href="/view_all">View</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if page_name == 'search': %} active {% endif %}">
               <a class="nav-link" href="/search">Search</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if page_name == 'trending': %} active {% endif %}">
               <a class="nav-link" href="/trending">Trending</a>
             </li>
             <li class="nav-item">
