@@ -9,6 +9,10 @@ handlers:
 - url: /css
   static_dir: www/css
 
+- url: /favicon\.ico
+  static_files: www/css/img/favicon.ico
+  upload: www/css/img/favicon.ico
+
 - url: /js
   static_dir: www/js
 
@@ -20,3 +24,4 @@ libraries:
   version: latest
 - name: jinja2
   version: latest
+
