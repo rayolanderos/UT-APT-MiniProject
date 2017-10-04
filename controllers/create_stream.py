@@ -37,7 +37,22 @@ class Create(webapp2.RequestHandler):
                         'tags': stream_tags,
                         'cover_url': cover_url}
 
-        
+        # search API
+        id = stream.key.id() # need to get the id here
+        document = search.Document(
+            doc_id=id,
+            fields=[
+                search.TextField(name='stream-id', value=id),
+                search.TextField(name='stream-name', value=stream_name),
+                search.TextField(name='email-message', value=invite_message),
+                search.TextField(name='subsciber-emails', value=subs_emails),
+                search.TextField(name='stream-tags', value=stream_tags),
+                search.DateField(name='stream-cover-url', value=cover_url),
+            ])
+        index = search.Index('streams', namespace='namespace') # temporary as don't know current namespace if created
+        index.put(document)
+
+
         create_api_uri = self.uri_for('api-create-stream', _full=True)
 
         result = urlfetch.fetch(
