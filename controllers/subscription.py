@@ -40,7 +40,7 @@ class Unsubscribe(webapp2.RequestHandler):
         stream_id = self.request.get('stream_id')
     
         subscribe_api_uri = self.uri_for('api-unsubscribe-stream', _full=True)
-        subscription_data = {'user_id': str(user.key.id()), 'stream_id': stream_id}
+        subscription_data = {'user_id': str(user.key.id()), 'stream_ids': [stream_id]}
 
         result = urlfetch.fetch(
             url=subscribe_api_uri,
