@@ -2,6 +2,8 @@ import webapp2
 import json
 import logging
 import datetime
+import random
+import urllib
 
 from google.appengine.api import search
 from models.stream import Stream
@@ -27,14 +29,23 @@ class CreateStream(webapp2.RequestHandler):
             #NDB storing
             stream = Stream(name=stream_name, cover_url=stream_cover_url, tags=tags, photos=[], owner=owner, views=0, views_list=[])
             stream_key = stream.put()
+            stream_id = str(stream_key.id())
 
             #Search indexing
+            rand = random.uniform(0.1, 0.01)
+            latitude = 30.2672 + rand
+            longitude = -98.0335 + rand
+            geopoint = search.GeoPoint(latitude, longitude)
+            search_tags = ' '.join(tags)
             search_index = search.Document(
+                doc_id= stream_id,
                 fields=[search.TextField(name='name', value=stream_name),
-                search.TextField(name='cover_url', value=stream_cover_url), #search.TextField(name='tags', value=tags),
-                search.TextField(name="stream_id", value= str(stream_key.id())),
-                search.DateField(name='date', value=datetime.datetime.now() )])
-            search.Index(name='stream').put(search_index)
+                search.TextField(name='cover_url', value=stream_cover_url), 
+                search.TextField(name='tags', value=search_tags),
+                search.TextField(name="stream_id", value= stream_id),
+                search.DateField(name='date', value=datetime.datetime.now()), 
+                search.GeoField(name='stream_location', value=geopoint) ])
+            result = search.Index(name='stream').put(search_index)
 
             stream_url = '/view?id={0}'.format(stream_key.id() )
             res = { "msg" : "Stream Created", "success": True, "stream_url" : stream_url }

@@ -31,7 +31,4 @@ class Manage(webapp2.RequestHandler):
                 'photo_count': len(stream.photos)
                 })
 
-
-        print(stream_list)
-
         self.response.out.write(json.dumps(stream_list))
