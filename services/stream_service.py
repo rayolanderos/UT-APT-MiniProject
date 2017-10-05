@@ -43,3 +43,20 @@ class CreateStream(webapp2.RequestHandler):
         else:
             res = { "msg" : "You tried to create a stream whose name is the same as an existing stream. The operation did not complete.", "success": False }
             self.response.out.write(json.dumps(res))
+
+class Subscribe(webapp2.RequestHandler):
+    def post(self):
+        json_string = self.request.body
+        dict_object = json.loads(json_string)
+        
+        user_id = dict_object['user_id']
+        stream_id = dict_object['stream_id']
+        user = ConnexusUser.query(ConnexusUser.user_id() == user_id).fetch()
+        stream = Stream.query(Stream.key().id() == stream_id).fetch() #test
+
+        #TODO handle the actual subscription in the model
+        #Send email to owner??
+
+class Unsubscribe(webapp2.RequestHandler):
+    def post(self):
+        pass

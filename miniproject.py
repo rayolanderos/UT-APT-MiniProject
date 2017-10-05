@@ -15,6 +15,7 @@ from controllers import trending
 from controllers import search
 from controllers import view
 from controllers import photos
+from controllers import subscription
 
 from services import view_all as ViewAllService
 from services import view as ViewService
@@ -82,6 +83,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/manage', manage.Manage, name='manage'),
     webapp2.Route('/trending', trending.Trending, name='trending'),
     webapp2.Route('/search', search.Search, name='trending'),
+    webapp2.Route('/subscribe', subscription.Subscribe, name='subscribe-stream'),
+    webapp2.Route('/unsubscribe', subscription.Unsubscribe, name='unsubscribe-stream'),
     webapp2.Route('/api/manage', ManageService.Manage, name='api-manage'),
     webapp2.Route('/api/trending', TrendingService.Trending, name='api-trending'),
     webapp2.Route('/api/search', SearchService.Search, name='api-search'),
@@ -91,6 +94,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/api/send_user_report', send_user_report.SendUserReport, name='api-send-user-report'),
     webapp2.Route('/api/delete_stream', DeleteService.DeleteStream, name='api-delete-stream'),
     webapp2.Route('/api/create_user', create_user.CreateUser, name='api-create-user'),
+    webapp2.Route('/api/subscribe', stream_service.Subscribe, name='api-subscribe-stream'),
+    webapp2.Route('/api/unsubscribe', stream_service.Unsubscribe, name='api-unsubscribe-stream'),
     webapp2.Route('/view', view.View, name='view'),
     webapp2.Route('/api/view', ViewService.View, name='api-view'),
     webapp2.Route('/upload_photo', photos.PhotoUploadHandler, name='upload-photo')

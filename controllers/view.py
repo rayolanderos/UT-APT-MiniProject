@@ -4,6 +4,8 @@ import json
 import os
 import logging
 
+from models.connexus_user import ConnexusUser
+
 from google.appengine.api import urlfetch
 from google.appengine.api import users
 from google.appengine.ext import blobstore
@@ -17,19 +19,33 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class View(webapp2.RequestHandler):
 
-    def get(self):
+    def display_error(self, error_message):
+        page_data = { 
+            'logout_url': users.create_logout_url('/'), 
+            'page_name': 'view',
+            'error_msg': error_message
+        }
+        template = JINJA_ENVIRONMENT.get_template('error.html')
+        self.response.write(template.render(page_data))
 
+    def is_user_subscribed(self, stream_id):
+        user = users.get_current_user()
+        user_result = ConnexusUser.query(ConnexusUser.user_id == user.user_id()).fetch()
+        
+        if not user_result:
+            return False
+        else:
+            connexus_user = user_result[0]
+            return stream_id in connexus_user.streams_subscribed
+
+
+    def get(self):
+        user = users.get_current_user()
         stream_id = self.request.get('id')
         logout_url = users.create_logout_url('/')
 
         if not stream_id :
-            page_data = { 
-                'logout_url': logout_url, 
-                'page_name': 'view',
-                'error_msg': 'The stream you are trying to access does not exist. It may have been removed by the owner.'
-            }
-            template = JINJA_ENVIRONMENT.get_template('error.html')
-            self.response.write(template.render(page_data))
+            self.display_error('The stream you are trying to access does not exist. It may have been removed by the owner.')
         else : 
             view_api_uri = '{}?id={}'.format(self.uri_for('api-view', _full=True), stream_id)
             stream_data = { 'id': stream_id }
@@ -40,25 +56,15 @@ class View(webapp2.RequestHandler):
             if result.status_code == 200:
                 j = json.loads(result.content)
                 if not j.get('id'):
-                    page_data = { 
-                        'logout_url': logout_url, 
-                        'page_name': 'view',
-                        'error_msg': 'The stream you are trying to access does not exist. It may have been removed by the owner.'
-                    }
-                    template = JINJA_ENVIRONMENT.get_template('error.html')
-                    self.response.write(template.render(page_data))
+                    self.display_error('The stream you are trying to access does not exist. It may have been removed by the owner.')
                 else:
                     upload_url = blobstore.create_upload_url('/upload_photo')
-                    logging.info(j)
                     page_data = {
                         'stream': j,
                         'logout_url': logout_url, 
                         'page_name': 'view',
-                        'upload_url': upload_url
+                        'upload_url': upload_url,
+                        'is_subscribed': self.is_user_subscribed(stream_id)
                     }
                     template = JINJA_ENVIRONMENT.get_template('view-single.html')
                     self.response.write(template.render(page_data))
-
-    def post(self):
-        # TODO handle
-        pass

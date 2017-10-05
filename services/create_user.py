@@ -16,7 +16,7 @@ class CreateUser(webapp2.RequestHandler):
         user_result = ConnexusUser.query(ConnexusUser.user_id == user_id).fetch()
         
         if not user_result: 
-            user = ConnexusUser(user_id=user_id, report=0)
+            user = ConnexusUser(user_id=user_id, report=0, streams_subscribed=[])
             user_key = user.put()
 
         self.response.out.write(json.dumps(dict_object))
