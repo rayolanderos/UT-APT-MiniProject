@@ -8,6 +8,11 @@ class ConnexusUser(ndb.Model):
     report = ndb.IntegerProperty()
     streams_subscribed = ndb.KeyProperty(Stream, repeated=True)
 
+    def get_subscribed_streams(self):
+        streams = ndb.get_multi(self.streams_subscribed)
+        logging.info(streams)
+        return streams
+
     @classmethod
     def from_user_id(cls, user_id):
         return cls.query().filter(cls.user_id == str(user_id)).get()
@@ -17,3 +22,5 @@ class ConnexusUser(ndb.Model):
         stream = cls.query(cls.user_id == str(user_id) and cls.streams_subscribed == stream_key).get()
         logging.info(stream)
         return stream != None
+
+

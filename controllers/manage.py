@@ -29,26 +29,36 @@ class Manage(webapp2.RequestHandler):
         if result.status_code != 200:
             logging.error('Not possible to create user :(')
 
+    def get_user_streams(self, user):
+        manage_api_uri = '{}?type=own&user={}'.format(self.uri_for('api-manage', _full=True), user.user_id())
+        result = urlfetch.fetch(url = manage_api_uri)
+        if result.status_code == 200:
+            return json.loads(result.content)
+        else:
+            return []
+
+    def get_user_subscriptions(self, user):
+        manage_api_uri = '{}?type=subscribed&user={}'.format(self.uri_for('api-manage', _full=True), user.user_id())
+        result = urlfetch.fetch(url = manage_api_uri)
+        if result.status_code == 200:
+            return json.loads(result.content)
+        else:
+            return []
+
     def get(self):
         user = users.get_current_user()
-
+        
         self.try_create_connexxus_user()
 
-        manage_api_uri = '{}?type=own&user={}'.format(self.uri_for('api-manage', _full=True), user)
-           
-        result = urlfetch.fetch(url = manage_api_uri)
-
-        if result.status_code == 200:
-            logout_url = users.create_logout_url('/')
-            j = json.loads(result.content)
-            page_data = {
-            'streams_own': j, 
-            'streams_subscribe': j, 
+        logout_url = users.create_logout_url('/')
+        page_data = {
+            'streams_own': self.get_user_streams(user),
+            'streams_subscribed': self.get_user_subscriptions(user), 
             'logout_url': logout_url, 
             'page_name': 'manage'
-            }
-            template = JINJA_ENVIRONMENT.get_template('manage.html')
-            self.response.write(template.render(page_data))
+        }
+        template = JINJA_ENVIRONMENT.get_template('manage.html')
+        self.response.write(template.render(page_data))
 
     def post(self):
         

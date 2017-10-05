@@ -47,27 +47,15 @@
                 </tr>
               </thead>
               <tbody>
+                {% for stream in streams_subscribed %}
                 <tr>
-                  <td><a href="#">My First Sub</a></td>
-                  <td class="text-center">06/02/2017</td>
-                  <td class="text-center">34</td>
-                  <td class="text-center">13</td>
-                  <td class="text-center"><input type="checkbox" name="delete-stream" value=""/></td>
+                  <td><a href="/view?id={{ stream.id }}">{{ stream.name }}</a></td>
+                  <td class="text-center">{{ stream.date }}</td>
+                  <td class="text-center">{{ stream.photo_count }}</td>
+                  <td class="text-center">{{ stream.all_time_views }}</td>
+                  <td class="text-center"><input type="checkbox" name="unsubscribe-stream" value="{{ stream.id }}"/></td>
                 </tr>
-                <tr>
-                  <td><a href="#">Stream Subscription 2</a></td>
-                  <td class="text-center">07/12/2017</td>
-                  <td class="text-center">21</td>
-                  <td class="text-center">11</td>
-                  <td class="text-center"><input type="checkbox" name="delete-stream" value=""/></td>
-                </tr>
-                <tr>
-                  <td><a href="#">Stream #3 in Subs</a></td>
-                  <td class="text-center">09/22/2017</td>
-                  <td class="text-center">43</td>
-                  <td class="text-center">30</td>
-                  <td class="text-center"><input type="checkbox" name="delete-stream" value=""/></td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
             <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-ban" aria-hidden="true"></i> Unsubscribe</button>
