@@ -2,6 +2,7 @@ import webapp2
 import json
 import datetime
 import logging
+import urllib
 
 from google.appengine.api import search
 
@@ -12,6 +13,8 @@ class Search(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
         s = self.request.get('s')
+
+        s = urllib.unquote_plus(s)
 
         stream_list = []
 

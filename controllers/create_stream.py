@@ -66,8 +66,11 @@ class Create(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         template = JINJA_ENVIRONMENT.get_template('create.html')
-        page_data = {   'page_name': 'create', 
-                        'user': user}
+        logout_url = users.create_logout_url('/')
+        page_data = { 
+                    'logout_url': logout_url, 
+                    'page_name': 'create', 
+                    'user': user }
         self.response.write(template.render(page_data))
 
 

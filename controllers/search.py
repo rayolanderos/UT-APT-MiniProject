@@ -3,6 +3,7 @@ import jinja2
 import json
 import os
 import logging
+import urllib
 
 from google.appengine.api import urlfetch
 from google.appengine.api import users
@@ -30,7 +31,8 @@ class Search(webapp2.RequestHandler):
                 'page_name': 'search'
             }
         else : 
-            search_api_uri = '{}?s={}'.format(self.uri_for('api-search', _full=True), s)
+            s_safe = urllib.quote_plus(s)
+            search_api_uri = '{}?s={}'.format(self.uri_for('api-search', _full=True), s_safe)
             result = urlfetch.fetch(url = search_api_uri)
 
             if result.status_code == 200:
@@ -42,6 +44,7 @@ class Search(webapp2.RequestHandler):
                     'logout_url': logout_url, 
                     'page_name': 'search'
                 }
+
 
         template = JINJA_ENVIRONMENT.get_template('search.html')
         self.response.write(template.render(page_data))
