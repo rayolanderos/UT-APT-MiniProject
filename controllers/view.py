@@ -30,7 +30,6 @@ class View(webapp2.RequestHandler):
         self.response.write(template.render(page_data))
 
     def is_user_subscribed(self, stream_id):
-        user = users.get_current_user()
         stream = Stream.get_by_id(stream_id)
         return ConnexusUser.is_subscribed(user.user_id(), stream.key)
         
