@@ -30,7 +30,6 @@ class View(webapp2.RequestHandler):
         self.response.write(template.render(page_data))
 
     def is_user_subscribed(self, stream_id):
-        user = users.get_current_user()
         stream = Stream.get_by_id(stream_id)
         return ConnexusUser.is_subscribed(user.user_id(), stream.key)
         
@@ -50,6 +49,10 @@ class View(webapp2.RequestHandler):
 
             result = urlfetch.fetch(url = view_api_uri)
 
+            subscribe_url = self.uri_for('subscribe-stream', _full=True)
+            if self.is_user_subscribed(stream_id):
+                subscribe_url = self.uri_for('unsubscribe-stream', _full=True)
+
             if result.status_code == 200:
                 j = json.loads(result.content)
                 if not j.get('id'):
@@ -62,8 +65,7 @@ class View(webapp2.RequestHandler):
                         'page_name': 'view',
                         'upload_url': upload_url,
                         'is_subscribed': self.is_user_subscribed(stream_id),
-                        'subscribe_url': self.uri_for('subscribe-stream', _full=True),
-
+                        'subscribe_url': subscribe_url,
                     }
                     template = JINJA_ENVIRONMENT.get_template('view-single.html')
                     self.response.write(template.render(page_data))

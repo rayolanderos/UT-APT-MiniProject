@@ -72,14 +72,21 @@ class Subscribe(webapp2.RequestHandler):
             user.put()
         else:
             logging.error('User not found!')
-            pass
 
-        logging.info('user: {}'.format(user))
-        logging.info('Stream: {}'.format(stream))
-
-        #TODO handle the actual subscription in the model
         #Send email to owner??
 
 class Unsubscribe(webapp2.RequestHandler):
     def post(self):
-        pass
+        json_string = self.request.body
+        dict_object = json.loads(json_string)
+
+        user_id = long(dict_object['user_id'])
+        stream_id = long(dict_object['stream_id'])
+        user = ConnexusUser.get_by_id(user_id)
+        stream = Stream.get_by_id(stream_id)
+
+        if user:
+            user.streams_subscribed = filter(lambda s: s !=stream.key, user.streams_subscribed)
+            user.put()
+        else:
+            logging.error('User not found!')
