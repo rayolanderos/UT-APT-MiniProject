@@ -32,12 +32,8 @@ class View(webapp2.RequestHandler):
     def is_user_subscribed(self, stream_id):
         user = users.get_current_user()
         stream = Stream.get_by_id(stream_id)
-        connexus_user = ConnexusUser.from_user_id(user.user_id())
+        return ConnexusUser.is_subscribed(user.user_id(), stream.key)
         
-        if not connexus_user:
-            return False
-        else:
-            return stream.key in connexus_user.streams_subscribed
 
 
     def get(self):

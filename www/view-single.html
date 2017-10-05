@@ -48,9 +48,9 @@
             <input type="hidden" value="{{ stream.id }}" name="stream_id" />
             <input type="hidden" value="{{ user_id }}" name="user_id" />
             {% if is_subscribed: %}
-            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check-circle" aria-hidden="true"></i> Subscribe</button>              
+            <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-minus-circle" aria-hidden="true"></i> Unsubscribe</button>              
             {% else: %}
-            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check-circle" aria-hidden="true"></i> Unsubscribe</button>
+            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check-circle" aria-hidden="true"></i> Subscribe</button>
             {% endif %}
           </form>
           <button class="btn btn-primary pull-right mr-1" onClick="show('#form-upload-container');"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
