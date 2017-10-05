@@ -40,22 +40,27 @@ INDEX_NAME = 'stream'
 
 class MainPage(webapp2.RequestHandler):
 
+    def try_create_connexxus_user(self):
+        user = users.get_current_user()
+        create_user_url = self.uri_for('api-create-user', _full=True)
+        result = urlfetch.fetch(
+            url=create_user_url,
+            payload=json.dumps({'user_id': user.user_id()}),
+            method=urlfetch.POST,
+            headers= {'Content-Type': 'application/json'}
+        )
+
+        if result.status_code != 200:
+            logging.error('Not possible to create user :(')
+
     def get(self):
         user = users.get_current_user()
         
         if user:
             nickname = user.nickname()
             logout_url = users.create_logout_url('/')
-            user_data = { 'user_id': user.email() }
-        
-            create_user_api = self.uri_for('api-create-user', _full=True)
 
-            result = urlfetch.fetch(
-                url=create_user_api,
-                payload=json.dumps(user_data),
-                method=urlfetch.POST,
-                headers= {'Content-Type': 'application/json'}
-            )
+            self.try_create_connexxus_user()
             
             template_values = {
                 'user': user,
