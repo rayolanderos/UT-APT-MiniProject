@@ -16,7 +16,5 @@ class DeleteStream(webapp2.RequestHandler):
             clean_id = int(stream_id)
             stream = Stream.get_by_id(clean_id)
             stream.key.delete()
-
-        #TODO: Delete search index as well
-
-        self.response.out.write(json.dumps(stream_ids))
+            index = search.Index('stream')
+            index.delete(stream_id)
