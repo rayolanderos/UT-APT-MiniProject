@@ -10,7 +10,6 @@ class ConnexusUser(ndb.Model):
 
     def get_subscribed_streams(self):
         streams = ndb.get_multi(self.streams_subscribed)
-        logging.info(streams)
         return streams
 
     @classmethod
@@ -20,7 +19,6 @@ class ConnexusUser(ndb.Model):
     @classmethod
     def is_subscribed(cls, user_id, stream_key):
         stream = cls.query(cls.user_id == str(user_id) and cls.streams_subscribed == stream_key).get()
-        logging.info(stream)
         return stream != None
 
 

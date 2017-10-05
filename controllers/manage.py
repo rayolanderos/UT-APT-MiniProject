@@ -78,8 +78,6 @@ class Manage(webapp2.RequestHandler):
             )
 
         streams_unsubscribe = self.request.get_all('unsubscribe-stream')
-        logging.info('streams to unsubscribe')
-        logging.info(streams_unsubscribe)
         if len(streams_unsubscribe) > 0:                
             unsubscribe_url = self.uri_for('api-unsubscribe-stream', _full=True)
             subscription_data = {'user_id': str(user.key.id()), 'stream_ids': streams_unsubscribe}

@@ -59,8 +59,6 @@ class Subscribe(webapp2.RequestHandler):
     def post(self):
         json_string = self.request.body
         dict_object = json.loads(json_string)
-        
-        logging.info(json_string)
 
         user_id = long(dict_object['user_id'])
         stream_id = long(dict_object['stream_id'])
