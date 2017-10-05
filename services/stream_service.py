@@ -32,9 +32,8 @@ class CreateStream(webapp2.RequestHandler):
             stream_id = str(stream_key.id())
 
             #Search indexing
-            rand = random.uniform(0.1, 0.01)
-            latitude = 30.2672 + rand
-            longitude = -98.0335 + rand
+            latitude = random.uniform(90, -90)
+            longitude = random.uniform(180, -180)
             geopoint = search.GeoPoint(latitude, longitude)
             search_tags = ' '.join(tags)
             search_index = search.Document(
