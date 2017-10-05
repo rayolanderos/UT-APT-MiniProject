@@ -3,6 +3,7 @@ import json
 import logging
 import datetime
 
+from models.connexus_user import ConnexusUser
 from google.appengine.api import search
 from models.stream import Stream
 
@@ -49,10 +50,22 @@ class Subscribe(webapp2.RequestHandler):
         json_string = self.request.body
         dict_object = json.loads(json_string)
         
-        user_id = dict_object['user_id']
-        stream_id = dict_object['stream_id']
-        user = ConnexusUser.query(ConnexusUser.user_id() == user_id).fetch()
-        stream = Stream.query(Stream.key().id() == stream_id).fetch() #test
+        logging.info(json_string)
+
+        user_id = long(dict_object['user_id'])
+        stream_id = long(dict_object['stream_id'])
+        user = ConnexusUser.get_by_id(user_id)
+        stream = Stream.get_by_id(stream_id)
+
+        if user:
+            user.streams_subscribed.append(stream.key)
+            user.put()
+        else:
+            logging.error('User not found!')
+            pass
+
+        logging.info('user: {}'.format(user))
+        logging.info('Stream: {}'.format(stream))
 
         #TODO handle the actual subscription in the model
         #Send email to owner??

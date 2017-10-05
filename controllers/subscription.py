@@ -12,12 +12,13 @@ from google.appengine.ext import blobstore
 
 class Subscribe(webapp2.RequestHandler):
     def post(self):
+        user = users.get_current_user()
 
-        user_id = self.request.get('user_id')
+        user = ConnexusUser.from_user_id(user.user_id())
         stream_id = self.request.get('stream_id')
-
+    
         subscribe_api_uri = self.uri_for('api-subscribe-stream', _full=True)
-        subscription_data = {'user_id': user_id, 'stream_id': stream_id}
+        subscription_data = {'user_id': str(user.key.id()), 'stream_id': stream_id}
 
         result = urlfetch.fetch(
             url=subscribe_api_uri,
@@ -29,7 +30,7 @@ class Subscribe(webapp2.RequestHandler):
         if result.status_code == 200:
             self.redirect('{}?id={}'.format(self.uri_for('view', _full=True), stream_id))
         else:
-            logging.error('Impossible to subscribe. User: {}, Stream: {}'.format(user_id, stream_id))
+            logging.error('Impossible to subscribe. User: {}, Stream: {}'.format(user, stream_id))
 
 class Unsubscribe(webapp2.RequestHandler):
     def post(self):

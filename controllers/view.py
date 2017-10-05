@@ -5,6 +5,7 @@ import os
 import logging
 
 from models.connexus_user import ConnexusUser
+from models.stream import Stream
 
 from google.appengine.api import urlfetch
 from google.appengine.api import users
@@ -30,18 +31,18 @@ class View(webapp2.RequestHandler):
 
     def is_user_subscribed(self, stream_id):
         user = users.get_current_user()
-        user_result = ConnexusUser.query(ConnexusUser.user_id == user.user_id()).fetch()
+        stream = Stream.get_by_id(stream_id)
+        connexus_user = ConnexusUser.from_user_id(user.user_id())
         
-        if not user_result:
+        if not connexus_user:
             return False
         else:
-            connexus_user = user_result[0]
-            return stream_id in connexus_user.streams_subscribed
+            return stream.key in connexus_user.streams_subscribed
 
 
     def get(self):
         user = users.get_current_user()
-        stream_id = self.request.get('id')
+        stream_id = long(self.request.get('id'))
         logout_url = users.create_logout_url('/')
 
         if not stream_id :
@@ -64,7 +65,9 @@ class View(webapp2.RequestHandler):
                         'logout_url': logout_url, 
                         'page_name': 'view',
                         'upload_url': upload_url,
-                        'is_subscribed': self.is_user_subscribed(stream_id)
+                        'is_subscribed': self.is_user_subscribed(stream_id),
+                        'subscribe_url': self.uri_for('subscribe-stream', _full=True),
+
                     }
                     template = JINJA_ENVIRONMENT.get_template('view-single.html')
                     self.response.write(template.render(page_data))
