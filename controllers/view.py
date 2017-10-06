@@ -33,20 +33,17 @@ class View(webapp2.RequestHandler):
         user = users.get_current_user()
         stream = Stream.get_by_id(stream_id)
         return ConnexusUser.is_subscribed(user.user_id(), stream.key)
-        
 
     def get(self):
         user = users.get_current_user()
         stream_id = long(self.request.get('id'))
+        limit = int(self.request.get('limit', '10'))
         logout_url = users.create_logout_url('/')
 
         if not stream_id :
             self.display_error('The stream you are trying to access does not exist. It may have been removed by the owner.')
         else : 
-            view_api_uri = '{}?id={}'.format(self.uri_for('api-view', _full=True), stream_id)
-            stream_data = { 'id': stream_id }
-            json_data = json.dumps(stream_data);
-
+            view_api_uri = '{}?id={}&offset=0&limit={}'.format(self.uri_for('api-view', _full=True), stream_id, limit)
             result = urlfetch.fetch(url = view_api_uri)
 
             subscribe_url = self.uri_for('subscribe-stream', _full=True)
@@ -64,6 +61,7 @@ class View(webapp2.RequestHandler):
                         'logout_url': logout_url, 
                         'page_name': 'view',
                         'upload_url': upload_url,
+                        'limit' : limit + 10,
                         'is_subscribed': self.is_user_subscribed(stream_id),
                         'subscribe_url': subscribe_url,
                     }

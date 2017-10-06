@@ -13,6 +13,8 @@ class View(webapp2.RequestHandler):
 
     def get(self):
         stream_id = int(self.request.get('id'))
+        offset = int(self.request.get('offset'))
+        limit = int(self.request.get('limit'))
 
         self.response.headers['Content-Type'] = 'application/json'
         stream = Stream.get_by_id(stream_id)
@@ -28,7 +30,7 @@ class View(webapp2.RequestHandler):
             stream.views = stream.views+1
             stream.views_list.insert(0, now)
             stream.put()
-            photos_urls = [images.get_serving_url(photo_key) for photo_key in stream.photos]
+            photos_urls = [images.get_serving_url(photo_key) for photo_key in stream.photos[offset:limit]]
             stream_data = {
             'id': stream.key.id(), 
             'name': stream.name, 
