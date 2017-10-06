@@ -12,11 +12,14 @@
           </div>
           {% endfor %}
         </div>
-        <div class="button-container">
-          <button type="submit" class="btn btn-info pull-left" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i> Previous</button>
-          <button type="submit" class="btn btn-info pull-right" onClick=""><i class="fa fa-arrow-right" aria-hidden="true"></i> Next</button>
-          <div class="clear"></div>
-        </div>
+        <form method="GET" action="" >
+          <input type="hidden" name="id" value="{{ stream.id }}" />
+          <input type="hidden" name="limit" value="{{ limit }}" />
+          <div class="button-container">
+            <button type="submit" class="btn btn-info pull-right" onClick=""><i class="fa fa-arrow-right" aria-hidden="true"></i> Load More</button>
+            <div class="clear"></div>
+          </div>
+        </form>
       </div>
       <div id="section">
         <div id="form-upload-container" class="hidden">
