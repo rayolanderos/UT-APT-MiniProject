@@ -7,6 +7,8 @@ import logging
 from google.appengine.api import urlfetch
 from google.appengine.api import users
 
+from models.connexus_user import ConnexusUser
+
 templates_dir = os.path.normpath(os.path.dirname(__file__) + '/../www/')
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -25,12 +27,14 @@ class Trending(webapp2.RequestHandler):
 
         if result.status_code == 200:
             logout_url = users.create_logout_url('/')
+            user = ConnexusUser.from_user_id(user.user_id())
+            report_rate = user.get_report_rate()
 
             j = json.loads(result.content)
             page_data = { 
                 'streams' : j,
                 'user': user, 
-                'report_rate' : report_rate,
+                'report_rate' : str(report_rate),
                 'logout_url': logout_url, 
                 'page_name': 'trending'
             }
@@ -42,7 +46,7 @@ class Trending(webapp2.RequestHandler):
         user = users.get_current_user()
         report_rate = self.request.get('report-rate')
 
-        update_data = { 'user_id': user.email(),
+        update_data = { 'user_id': user.user_id(),
                         'report_rate': report_rate
         } 
 

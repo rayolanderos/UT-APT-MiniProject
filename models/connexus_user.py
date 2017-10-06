@@ -12,6 +12,13 @@ class ConnexusUser(ndb.Model):
         streams = ndb.get_multi(self.streams_subscribed)
         return streams
 
+    def get_report_rate(self):
+        report = self.report
+        logging.info("********** SELF ********************")
+        logging.info(self.report)
+        logging.info("********** ------ ********************")
+        return report
+
     @classmethod
     def from_user_id(cls, user_id):
         return cls.query().filter(cls.user_id == str(user_id)).get()
