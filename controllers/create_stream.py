@@ -4,6 +4,8 @@ import json
 import os
 import logging
 
+from services.emailer import MailService
+
 from google.appengine.api import urlfetch
 from google.appengine.api import users
 from google.appengine.api import mail
@@ -46,8 +48,10 @@ class Create(webapp2.RequestHandler):
             method=urlfetch.POST,
             headers= {'Content-Type': 'application/json'}
         )
+        
         if result.status_code == 200:
             response = json.loads(result.content)
+            logging.info(result)
             user = users.get_current_user()
             
             if response['success'] : 
@@ -76,19 +80,9 @@ class Create(webapp2.RequestHandler):
 
     def send_invitation_emails(self, sender, emails, stream_url, message):
 
-        email_content = '{0}\nYou can find the stream here: {1}'.format(message, stream_url)
         html_email_content = '{0}\nYou can find the stream <a href="{1}">here.</a>'.format(message, stream_url)
 
         for email in emails:
-            email_message = mail.EmailMessage(
-                sender=sender,
-                subject='Subscribe to my Connexus stream'
-            )
-
-            email_message.to = email
-            email_message.body = email_content
-            email_message.html = html_email_content
-            email_message.send()
-
+            MailService.send_email(sender, email, html_email_content)
 
         pass

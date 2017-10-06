@@ -19,8 +19,6 @@ class CreateStream(webapp2.RequestHandler):
         stream_name = dict_object['name']
         stream_cover_url = dict_object['cover_url']
         tags = dict_object['tags']
-        emails = dict_object['emails']
-        email_message = dict_object['email_message']
         owner = dict_object['owner']
 
         same_name = Stream.query(Stream.name == stream_name).fetch()
