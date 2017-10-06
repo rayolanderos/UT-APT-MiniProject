@@ -14,9 +14,6 @@ class ConnexusUser(ndb.Model):
 
     def get_report_rate(self):
         report = self.report
-        logging.info("********** SELF ********************")
-        logging.info(self.report)
-        logging.info("********** ------ ********************")
         return report
 
     @classmethod
