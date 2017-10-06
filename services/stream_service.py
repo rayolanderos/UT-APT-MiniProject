@@ -5,6 +5,7 @@ import datetime
 import random
 import urllib
 
+from models.connexus_user import ConnexusUser
 from google.appengine.api import search
 from models.stream import Stream
 
@@ -53,3 +54,37 @@ class CreateStream(webapp2.RequestHandler):
         else:
             res = { "msg" : "You tried to create a stream whose name is the same as an existing stream. The operation did not complete.", "success": False }
             self.response.out.write(json.dumps(res))
+
+class Subscribe(webapp2.RequestHandler):
+    def post(self):
+        json_string = self.request.body
+        dict_object = json.loads(json_string)
+
+        user_id = long(dict_object['user_id'])
+        stream_id = long(dict_object['stream_id'])
+        user = ConnexusUser.get_by_id(user_id)
+        stream = Stream.get_by_id(stream_id)
+
+        if user and stream.key not in user.streams_subscribed:
+            user.streams_subscribed.append(stream.key)
+            user.put()
+        else:
+            logging.error('User not found!')
+
+        #Send email to owner??
+
+class Unsubscribe(webapp2.RequestHandler):
+    def post(self):
+        json_string = self.request.body
+        dict_object = json.loads(json_string)
+
+        user_id = long(dict_object['user_id'])
+        stream_ids = dict_object['stream_ids']
+        stream_ids = [long(stream_id) for stream_id in stream_ids]
+        user = ConnexusUser.get_by_id(user_id)
+
+        if user:
+            user.streams_subscribed = filter (lambda s: s.id() not in stream_ids, user.streams_subscribed)
+            user.put()
+        else:
+            logging.error('User not found!')

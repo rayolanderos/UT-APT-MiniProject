@@ -13,10 +13,8 @@ class CreateUser(webapp2.RequestHandler):
 
         user_id = dict_object['user_id']
 
-        user_result = ConnexusUser.query(ConnexusUser.user_id == user_id).fetch()
+        user_result = ConnexusUser.from_user_id(user_id)
         
         if not user_result: 
-            user = ConnexusUser(user_id=user_id, report=0)
+            user = ConnexusUser(user_id=user_id, report=0, streams_subscribed=[])
             user_key = user.put()
-
-        self.response.out.write(json.dumps(dict_object))
