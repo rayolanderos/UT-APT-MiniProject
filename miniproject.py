@@ -8,6 +8,9 @@ from google.appengine.api import urlfetch
 import jinja2
 import webapp2
 
+import sendgrid
+from sendgrid.helpers import mail
+
 from controllers import view_all
 from controllers import create_stream
 from controllers import manage
@@ -45,7 +48,7 @@ class MainPage(webapp2.RequestHandler):
         create_user_url = self.uri_for('api-create-user', _full=True)
         result = urlfetch.fetch(
             url=create_user_url,
-            payload=json.dumps({'user_id': user.user_id()}),
+            payload=json.dumps({'user_id': user.user_id(), 'user_email': user.email() }),
             method=urlfetch.POST,
             headers= {'Content-Type': 'application/json'}
         )

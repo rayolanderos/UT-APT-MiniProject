@@ -15,7 +15,7 @@ class SendUserReport(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         rate = self.request.get('rate')
         report_rate = int(rate)
-        email_address = "rayolanderos@gmail.com"
+        email_address = "noreply@ut-apt-miniproject-greenteam.appspotmail.com"
         email_subject = "This is your requested digest for connexus"
 
         subscribers = ConnexusUser.query(ConnexusUser.report == report_rate).fetch()
@@ -60,4 +60,16 @@ class SendUserReport(webapp2.RequestHandler):
             email_message.body = email_content
             email_message.html = html_email_content
             email_message.send()
+
+            # sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+            # from_email = Email(sender)
+            # to_email = Email(email)
+            # subject = subject
+            # content = Content("text/html", email_content)
+            # mail = Mail(from_email, subject, to_email, content)
+            # logging.info("SENT TO "+ email)
+            # response = sg.client.mail.send.post(request_body=mail.get())
+
         pass
+
+

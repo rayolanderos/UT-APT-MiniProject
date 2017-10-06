@@ -5,6 +5,7 @@ from google.appengine.ext import ndb
 
 class ConnexusUser(ndb.Model):
     user_id = ndb.StringProperty()
+    user_email = ndb.StringProperty()
     report = ndb.IntegerProperty()
     streams_subscribed = ndb.KeyProperty(Stream, repeated=True)
 
