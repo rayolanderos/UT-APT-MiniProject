@@ -2,6 +2,7 @@ import webapp2
 import jinja2
 import json
 import os
+import urlparse
 import logging
 
 from google.appengine.api import urlfetch
@@ -24,6 +25,8 @@ class Create(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
         email_address = user.email()
+        o = urlparse.urlparse(self.request.url)
+        app_url = urlparse.urlunparse((o.scheme, o.netloc, '', '', '', ''))
 
         stream_name = self.request.get('stream-name')
         invite_message = self.request.get('email-message', DEFAULT_EMAIL_MESSAGE)
@@ -51,7 +54,8 @@ class Create(webapp2.RequestHandler):
             user = users.get_current_user()
             
             if response['success'] : 
-                self.send_invitation_emails(email_address, subs_emails, response['stream_url'], invite_message)
+                full_stream_url = app_url + response['stream_url']
+                self.send_invitation_emails(email_address, subs_emails, full_stream_url, invite_message)
                 self.redirect('/manage')
             else: 
                 logout_url = users.create_logout_url('/')

@@ -15,7 +15,7 @@ class SendUserReport(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         rate = self.request.get('rate')
         report_rate = int(rate)
-        email_address = "info@connexusapt.com"
+        email_address = "rayolanderos@gmail.com"
         email_subject = "This is your requested digest for connexus"
 
         subscribers = ConnexusUser.query(ConnexusUser.report == report_rate).fetch()
