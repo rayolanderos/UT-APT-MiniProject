@@ -15,7 +15,7 @@ class SendUserReport(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         rate = self.request.get('rate')
         report_rate = int(rate)
-        email_address = "rayolanderos@gmail.com"
+        email_address = "noreply@ut-apt-miniproject-greenteam.appspotmail.com"
         email_subject = "This is your requested digest for connexus"
 
         subscribers = ConnexusUser.query(ConnexusUser.report == report_rate).fetch()
@@ -23,7 +23,7 @@ class SendUserReport(webapp2.RequestHandler):
         subs_emails = []
 
         for subscriber in subscribers:
-            subs_emails.append(subscriber.user_id)
+            subs_emails.append(subscriber.user_email)
 
         trending_api_uri = self.uri_for('api-trending', _full=True)
 

@@ -12,9 +12,10 @@ class CreateUser(webapp2.RequestHandler):
         dict_object = json.loads(json_string)
 
         user_id = dict_object['user_id']
+        user_email = dict_object['user_email']
 
         user_result = ConnexusUser.from_user_id(user_id)
         
         if not user_result: 
-            user = ConnexusUser(user_id=user_id, report=0, streams_subscribed=[])
+            user = ConnexusUser(user_id=user_id, user_email=user_email, report=0, streams_subscribed=[])
             user_key = user.put()

@@ -45,7 +45,7 @@ class MainPage(webapp2.RequestHandler):
         create_user_url = self.uri_for('api-create-user', _full=True)
         result = urlfetch.fetch(
             url=create_user_url,
-            payload=json.dumps({'user_id': user.user_id()}),
+            payload=json.dumps({'user_id': user.user_id(), 'user_email': user.email()}),
             method=urlfetch.POST,
             headers= {'Content-Type': 'application/json'}
         )
