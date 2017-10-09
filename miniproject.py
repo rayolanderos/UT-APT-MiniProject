@@ -103,6 +103,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/api/unsubscribe', stream_service.Unsubscribe, name='api-unsubscribe-stream'),
     webapp2.Route('/view', view.View, name='view'),
     webapp2.Route('/api/view', ViewService.View, name='api-view'),
-    webapp2.Route('/upload_photo', photos.PhotoUploadHandler, name='upload-photo')
+    webapp2.Route('/upload_photo', photos.PhotoUploadHandler, name='upload-photo'),
+    webapp2.Route('/generate_upload_url', photos.GenerateUploadUrlHandler, name='generate-upload-url')
 
 ], debug=True)

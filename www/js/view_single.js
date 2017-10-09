@@ -1,44 +1,42 @@
+
+
 $(document).ready( function() {
-    $(document).on('change', '.btn-file :file', function() {
-        var input = $(this),
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        input.trigger('fileselect', [label]);
-        });
-
-        $('.btn-file :file').on('fileselect', function(event, label) {
-            
-            var input = $(this).parents('.input-group').find(':text'),
-                log = label;
-            
-            if( input.length ) {
-                input.val(log);
-            } else {
-                if( log ) alert(log);
-            }
-        
-    });
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function (e) {
-                $('#img-upload').attr('src', e.target.result);
-            }
-            
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#imgInp").change(function(){
-        readURL(this);
-    });   
 
     lightbox.option({
       'resizeDuration': 200,
       'wrapAround': true
-    })
+    });
     
 });
+
+Dropzone.autoDiscover = false;
+
+var myDropzone = new Dropzone("#form-upload", {
+    paramName: "file", // The name that will be used to transfer the file
+    maxFilesize: 2, // MB
+    uploadMultiple : true, 
+    parallelUploads: 0,
+    autoProcessQueue: false,
+    acceptedFiles: 'image/*'
+});
+
+myDropzone.on("addedfile", function(file) { 
+    $.ajax({
+        url: '/generate_upload_url',
+        async: false,
+        success: function(data) {
+            $("#form-upload").attr('action', data);
+            myDropzone.options.url = data;
+        }
+    });
+});
+
+function startUpload(){
+    for (var i = 0; i < myDropzone.getAcceptedFiles().length; i++) {
+        myDropzone.processFile(myDropzone.getAcceptedFiles()[i]);
+    }
+    location.reload();
+}
 
 function show(elem){
     $(elem).fadeIn();

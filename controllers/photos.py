@@ -31,3 +31,8 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
             e = sys.exc_info()[0]
             logging.exception(e)
             self.error(500)
+
+class GenerateUploadUrlHandler(blobstore_handlers.BlobstoreUploadHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write(blobstore.create_upload_url('/upload_photo'))
