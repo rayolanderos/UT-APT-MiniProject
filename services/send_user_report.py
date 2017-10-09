@@ -30,12 +30,10 @@ class SendUserReport(webapp2.RequestHandler):
         result = urlfetch.fetch(url = trending_api_uri)
 
         if result.status_code == 200:
-
             trending_streams = json.loads(result.content)
             message = "These are the trending streams in the last hour:"
             html_message = "<h1>These are the trending streams in the last hour:</h1>"
             for trending_stream in trending_streams:
-
                 message += "\n {0} ({1} views)".format(trending_stream['name'], trending_stream['views_list_count'])
                 html_message += "<br> {0} (<b>{1}</b> views)".format(trending_stream['name'], trending_stream['views_list_count'])
             email_content = message
