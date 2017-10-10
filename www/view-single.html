@@ -23,13 +23,15 @@
       </div>
       <div id="section">
         <div id="form-upload-container" class="hidden well well-lg">
-          <button type="button" class="btn btn-primary" onclick="startUpload()" ><i class="fa fa-plus" aria-hidden="true"></i> Upload All Images</button>
-          <br>
           <form id="form-upload" method="POST" class="dropzone" enctype="multipart/form-data" action="{{ upload_url }}">
             <input type="hidden" name="stream_id" value="{{ stream.id }}"/>
             <div class="dz-message" data-dz-message><span> <i class="fa fa-picture-o fa-4" aria-hidden="true"></i> <i class="fa fa-hand-paper-o fa-3" aria-hidden="true" id="upload-hand" ></i>Drag and drop images to upload them </span></div>
             <div class="clear"></div>
           </form>
+          <div class="button-container">
+            <button id="start-upload" type="button" class="btn btn-success pull-right" onclick="startUpload()" ><i class="fa fa-plus" aria-hidden="true"></i> Upload All Images</button>
+            <div class="clear"></div>
+          </div>
         </div>
         <div class="button-container">
           <form method="POST" action="{{ subscribe_url }}">

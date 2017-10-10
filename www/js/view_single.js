@@ -32,10 +32,23 @@ myDropzone.on("addedfile", function(file) {
 });
 
 function startUpload(){
+    $("#start-upload").prop("disabled", true)
     for (var i = 0; i < myDropzone.getAcceptedFiles().length; i++) {
+        $.ajax({
+            url: '/generate_upload_url',
+            async: false,
+            success: function(data) {
+                $("#form-upload").attr('action', data);
+                myDropzone.options.url = data;
+            }
+        });
         myDropzone.processFile(myDropzone.getAcceptedFiles()[i]);
     }
-    location.reload();
+    $("#start-upload").prop("disabled", false)
+}
+
+function reloadPage(){
+    location.reload;
 }
 
 function show(elem){
