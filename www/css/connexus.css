@@ -230,6 +230,9 @@ i#upload-hand {
     background: white;
     margin-right: 12px;
 }
+button#btn-geo-view {
+    margin-top: 10px;
+}
 
 .dropzone{
     min-height: 20px;

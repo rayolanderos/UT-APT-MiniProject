@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <div id="stream-{{ stream.id }}">
-      <h1 class="text-center text-lg-left">{{ stream.name }}</h1>
+      <h1 class="text-center text-lg-left">{{ stream.name }} <button id="btn-geo-view" class="btn btn-info pull-right"><i class="fa fa-globe" aria-hidden="true"></i> Geo View</button></h1>
       <div class="section">
         <div class="row text-center text-lg-left">
           {% for photo_url in stream.photos %}

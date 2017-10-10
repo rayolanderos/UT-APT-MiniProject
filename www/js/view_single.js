@@ -20,6 +20,16 @@ var myDropzone = new Dropzone("#form-upload", {
     acceptedFiles: 'image/*'
 });
 
+myDropzone.on("complete", function() {
+  // If all files have been uploaded
+  if (this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
+    var _this = this;
+    // Remove all files
+    _this.removeAllFiles();
+    reloadPage();
+  }
+});
+
 myDropzone.on("addedfile", function(file) { 
     $.ajax({
         url: '/generate_upload_url',

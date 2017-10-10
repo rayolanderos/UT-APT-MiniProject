@@ -27,6 +27,7 @@ from services import stream_service
 from services import update_user_report
 from services import send_user_report
 from services import create_user
+from services import create_photo
 from services import delete as DeleteService
 
 templates_dir = os.path.normpath(os.path.dirname(__file__) + '/www/')
@@ -99,6 +100,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/api/send_user_report', send_user_report.SendUserReport, name='api-send-user-report'),
     webapp2.Route('/api/delete_stream', DeleteService.DeleteStream, name='api-delete-stream'),
     webapp2.Route('/api/create_user', create_user.CreateUser, name='api-create-user'),
+    webapp2.Route('/api/create_photo', create_photo.CreatePhoto, name='api-create-photo'),
     webapp2.Route('/api/subscribe', stream_service.Subscribe, name='api-subscribe-stream'),
     webapp2.Route('/api/unsubscribe', stream_service.Unsubscribe, name='api-unsubscribe-stream'),
     webapp2.Route('/view', view.View, name='view'),
