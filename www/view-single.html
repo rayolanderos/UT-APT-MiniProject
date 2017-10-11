@@ -12,6 +12,12 @@
           </div>
           {% endfor %}
         </div>
+        <div class="bootstrap-tagsinput">
+          {% for tag in stream.tags %}
+          <span class="tag label label-info">{{ tag }}</span>
+          {% endfor %}
+          <input placeholder="" size="1" type="text">
+        </div>
         <form method="GET" action="" >
           <input type="hidden" name="id" value="{{ stream.id }}" />
           <input type="hidden" name="limit" value="{{ limit }}" />

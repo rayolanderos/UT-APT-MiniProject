@@ -35,6 +35,7 @@ class View(webapp2.RequestHandler):
             'id': stream.key.id(), 
             'name': stream.name, 
             'cover_url': stream.cover_url,
+            'tags': stream.tags,
             'photos': photos_urls }
         else:
             stream_data = {
