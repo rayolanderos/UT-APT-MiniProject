@@ -17,7 +17,7 @@ class Photo(ndb.Model):
         return lat
 
     def get_url(self):
-        url = self.blob_key
+        url = self.url
         return url
 
     @classmethod

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div id="geoview-stream-{{ stream_id }}">
+      <h1 class="text-center text-lg-left">Geo View for Stream <a id="btn-back-view" class="btn btn-info pull-right" href="/view?id={{stream_id}}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to stream</a> </h1>
+      <div class="section">
+        <div id="geo-map"></div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS00G6F5Mt267D2kF1dUqYDdpaiHAeczg&callback=initMap">
+    </script>
+    <script type="text/javascript" charset="utf8" src="js/geo_view.js"></script>
+    <script type="text/javascript">
+      var locations = [
+      {% for photo in photos:  %}
+        {lat: {{ photo.lat }} , lng: {{ photo.lon}}, url: '{{ photo.url }}' },
+      {% endfor %} 
+      ]
+    </script>
+{% endblock %}
