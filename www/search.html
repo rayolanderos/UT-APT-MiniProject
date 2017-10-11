@@ -1,6 +1,36 @@
 {% extends "layout.html" %}
 {% block content %}
 
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="/resources/demos/style.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script>
+		$( function() {
+			var cache = {};
+			$( "#input-search" ).autocomplete({
+			minLength: 2,
+			source: function( request, response ) {
+				var term = request.term;
+				if ( term in cache ) {
+				response( cache[ term ] );
+				return;
+				}
+				
+				$.getJSON( "search.py", request, function( data, status, xhr ) {
+				cache[ term ] = data;
+				response( data );
+				});
+			}
+			});
+		} );
+		</script>
+	</head>	
+
       <h1 class="text-center text-lg-left">Search Streams </h1>
 
       <div class="section">
