@@ -6,7 +6,7 @@ import datetime
 from google.appengine.ext import ndb
 from google.appengine.api import images
 
-
+from models.photo import Photo
 from models.stream import Stream
 
 class View(webapp2.RequestHandler):
@@ -18,9 +18,10 @@ class View(webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'application/json'
         stream = Stream.get_by_id(stream_id)
+        photos = Photo.query(Photo.stream_id == stream_id)
         now = datetime.datetime.now()
         
-        if stream != None :
+        if stream != None and photos != None :
             if not stream.views :
                 stream.views = 0
                 
@@ -30,7 +31,9 @@ class View(webapp2.RequestHandler):
             stream.views = stream.views+1
             stream.views_list.insert(0, now)
             stream.put()
-            photos_urls = [images.get_serving_url(photo_key) for photo_key in stream.photos[offset:limit]]
+            photos_urls = []
+            for photo in photos.fetch(limit, offset=offset):
+                photos_urls.append(photo.get_url())
             stream_data = {
             'id': stream.key.id(), 
             'name': stream.name, 

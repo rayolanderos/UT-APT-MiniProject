@@ -18,23 +18,10 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
             uploads = self.get_uploads()
             logging.info(uploads)
             if len(uploads) > 0:
-<<<<<<< HEAD
-                
-=======
-
-                #Associate with stream
                 upload = uploads[0]
->>>>>>> master
                 stream_id = int(self.request.get('stream_id'))
                 stream = Stream.get_by_id(stream_id)
-                logging.info('Stream ID: {}, Photos: {}'.format(stream_id, len(stream.photos)))
 
-                for upload in uploads:
-                    logging.info(upload)
-                    logging.info(upload.key())
-                    stream.photos.insert(0, upload.key())
-
-                logging.info('[After] Stream ID: {}, Photos: {}'.format(stream_id, len(stream.photos)))
                 stream.date = datetime.datetime.now()
                 stream.put()
 
