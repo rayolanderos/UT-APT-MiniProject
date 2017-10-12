@@ -239,6 +239,9 @@ i#upload-hand {
     background: white;
     margin-right: 12px;
 }
+button#btn-geo-view {
+    margin-top: 10px;
+}
 
 .dropzone{
     min-height: 20px;
@@ -292,6 +295,36 @@ span.btn:hover {
 
 #img-upload{
     width: 100%;
+}
+
+/****************
+    Geo View
+*****************/
+
+#geo-map {
+  height: 100%;
+  min-height: 500px;
+  width: 100%;
+  margin-top: 25px;
+}
+
+a#btn-back-view {
+  margin-top: 10px;
+}
+
+.slider.slider-horizontal {
+  width: 96%;
+  margin: 15px 2%;
+}
+
+#current-range-min,
+#current-range-max{
+  font-weight: bold;
+}
+
+button#confirm-range {
+    margin: 0px 0px 5px 20px;
+    /* font-weight: bold; */
 }
 
 /****************

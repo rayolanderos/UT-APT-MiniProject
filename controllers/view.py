@@ -37,7 +37,7 @@ class View(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         stream_id = long(self.request.get('id'))
-        limit = int(self.request.get('limit', '10'))
+        limit = int(self.request.get('limit', '8'))
         logout_url = users.create_logout_url('/')
 
         if not stream_id :
@@ -61,7 +61,7 @@ class View(webapp2.RequestHandler):
                         'logout_url': logout_url, 
                         'page_name': 'view',
                         'upload_url': upload_url,
-                        'limit' : limit + 10,
+                        'limit' : limit + 8,
                         'is_subscribed': self.is_user_subscribed(stream_id),
                         'subscribe_url': subscribe_url,
                     }

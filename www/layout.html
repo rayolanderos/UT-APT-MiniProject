@@ -17,6 +17,9 @@
     <!-- FontAwesome CSS -->
     <link type="text/css" href="vendor/fontawesome/css/font-awesome.min.css" rel="stylesheet">
 
+    <!-- Bootstrap Slider -->
+    <link rel="stylesheet" href="vendor/bootstrap-slider/css/bootstrap-slider.min.css">
+
     <!-- Bootstrap TagsInput -->
     <link type="text/css" href="vendor/tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
 
@@ -61,7 +64,7 @@
             <li class="nav-item {% if page_name == 'create': %} active {% endif %}">
               <a class="nav-link" href="/create_stream">Create</a>
             </li>
-            <li class="nav-item {% if page_name == 'view' or page_name == 'view_all': %} active {% endif %}">
+            <li class="nav-item {% if page_name == 'view' or page_name == 'view_all' or page_name == 'geo_view': %} active {% endif %}">
               <a class="nav-link" href="/view_all">View</a>
             </li>
             <li class="nav-item {% if page_name == 'search': %} active {% endif %}">
