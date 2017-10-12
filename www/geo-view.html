@@ -3,23 +3,32 @@
     <div id="geoview-stream-{{ stream_id }}">
       <h1 class="text-center text-lg-left">Geo View for Stream <a id="btn-back-view" class="btn btn-info pull-right" href="/view?id={{stream_id}}" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to stream</a> </h1>
       <div class="section">
+        <div id="range-filter-container">
+          <h4>Filter images by date <button id="confirm-range" type="button" class="btn btn-success btn-sm" onClick="filter_images()"> <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Filter</button> </h4>
+          <p><span id="current-range-label">Current Date Range: <span id="current-range-min">335</span> to <span id="current-range-max">365</span></span> </p>
+          <input id="range-filter" type="text" class="span2" value="" data-slider-min="0" data-slider-max="365" data-slider-step="1" data-slider-value="[{{ min_date }},{{ max_date }}]"/> 
+        </div>
         <div id="geo-map"></div>
       </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
+    <script src="vendor/bootstrap-slider/js/bootstrap-slider.min.js"></script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS00G6F5Mt267D2kF1dUqYDdpaiHAeczg&callback=initMap">
     </script>
-    <script type="text/javascript" charset="utf8" src="js/geo_view.js"></script>
     <script type="text/javascript">
+      var curr_loc = "/geo_view?id={{ stream_id }}";
+      var min_date = {{ min_date }}; 
+      var max_date = {{ max_date }};
       var locations = [
       {% for photo in photos:  %}
         {lat: {{ photo.lat }} , lng: {{ photo.lon}}, url: '{{ photo.url }}' },
       {% endfor %} 
       ]
     </script>
+    <script type="text/javascript" charset="utf8" src="js/geo_view.js"></script>
 {% endblock %}

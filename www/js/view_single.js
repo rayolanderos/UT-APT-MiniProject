@@ -58,7 +58,7 @@ function startUpload(){
 }
 
 function reloadPage(){
-    location.reload;
+    window.location.reload;
 }
 
 function show(elem){

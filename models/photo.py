@@ -7,6 +7,7 @@ class Photo(ndb.Model):
     stream_id = ndb.IntegerProperty()
     lat = ndb.FloatProperty()
     lon = ndb.FloatProperty()
+    date = ndb.DateTimeProperty(auto_now_add=True)
 
     def get_lon(self):
         lon = self.lon
@@ -19,6 +20,10 @@ class Photo(ndb.Model):
     def get_url(self):
         url = self.url
         return url
+
+    def get_date(self):
+        date = self.date
+        return date;
 
     @classmethod
     def from_url(cls, url):

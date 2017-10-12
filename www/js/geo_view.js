@@ -47,4 +47,41 @@ function initMap() {
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 }
 
+function filter_images(){
+    values = $("#range-filter").val()
+    values = values.split(",");
+    min = values[0];
+    max = values[1];
+    window.location.href = curr_loc+"&min="+min+"&max="+max;
+}
+
+function get_display_date(diff){
+    abs = 365 - diff;
+
+    options = {  
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    var d = new Date();
+    d.setDate(d.getDate()-abs);
+    return d.toLocaleString('en-us', options);
+}
+
+$(function() {
+    $("#current-range-min").text(get_display_date(min_date) );
+    $("#current-range-max").text(get_display_date(max_date) );
+    
+    $("#range-filter").slider({
+        
+    });
+    $("#range-filter").on("slide", function(slideEvt) {
+        $("#current-range-min").text(get_display_date(slideEvt.value[0]) );
+        $("#current-range-max").text(get_display_date(slideEvt.value[1]) ) ;
+    });
+    
+});
+
+
+
 

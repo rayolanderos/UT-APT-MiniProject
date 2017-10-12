@@ -32,12 +32,14 @@ class GeoView(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         stream_id = long(self.request.get('id'))
+        min_date = int(self.request.get('min', 335))
+        max_date = int(self.request.get('max', 365))
         logout_url = users.create_logout_url('/')
 
         if not stream_id :
             self.display_error('The geo view for the stream you are trying to access does not exist. It may have been removed by the owner.')
         else : 
-            geo_view_api = '{}?id={}'.format(self.uri_for('api-geo-view', _full=True), stream_id)
+            geo_view_api = '{}?id={}&min={}&max={}'.format(self.uri_for('api-geo-view', _full=True), stream_id, min_date, max_date)
             result = urlfetch.fetch(url = geo_view_api)
 
             if result.status_code == 200:
@@ -46,6 +48,8 @@ class GeoView(webapp2.RequestHandler):
                     'photos': photos,
                     'stream_id': stream_id,
                     'logout_url': logout_url, 
+                    'min_date' : min_date, 
+                    'max_date' : max_date,
                     'page_name': 'geo_view'
                 }
                 template = JINJA_ENVIRONMENT.get_template('geo-view.html')
