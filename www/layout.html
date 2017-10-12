@@ -53,10 +53,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
 
-          <form class="form-inline my-2 my-lg-0">
-            <input id="input_search" class="form-control mr-ms-2" placeholder="Search" aria-label="Search" type="text" />
-          </form>
-
           <ul class="navbar-nav ml-auto">
             <li class="nav-item {% if page_name == 'manage': %} active {% endif %}">
               <a class="nav-link" href="/manage">Manage</a>
@@ -77,6 +73,10 @@
               <a class="nav-link" href="{{ logout_url }}">Logout</a>
             </li>
           </ul>
+          
+          <form class="form-inline my-2 my-lg-0">
+            <input id="input_search" class="form-control mr-ms-2" placeholder="Search" aria-label="Search" type="text" />
+          </form>
         </div>
       </div>
     </nav>
