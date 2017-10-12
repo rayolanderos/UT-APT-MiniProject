@@ -16,14 +16,12 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
         try:
             uploads = self.get_uploads()
-            if len(uploads) > 0:
 
-                #Associate with stream
+            if len(uploads) > 0:
                 upload = uploads[0]
                 stream_id = int(self.request.get('stream_id'))
                 stream = Stream.get_by_id(stream_id)
 
-                stream.photos.insert(0, upload.key())
                 stream.date = datetime.datetime.now()
                 stream.put()
 

@@ -126,6 +126,15 @@ footer p {
     background-color: #0069d9;
     border-color: #0062cc;
 }
+/******************
+|    Layout
+*******************/
+
+.ui-autocomplete div.list_item_container img{
+    max-width: 50px;
+    max-height: 50px;
+
+}
 
 /***************
      Manage 

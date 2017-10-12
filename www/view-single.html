@@ -12,6 +12,12 @@
           </div>
           {% endfor %}
         </div>
+        <div class="bootstrap-tagsinput">
+          {% for tag in stream.tags %}
+          <span class="tag label label-info">{{ tag }}</span>
+          {% endfor %}
+          <input placeholder="" size="1" type="text">
+        </div>
         <form method="GET" action="" >
           <input type="hidden" name="id" value="{{ stream.id }}" />
           <input type="hidden" name="limit" value="{{ limit }}" />
@@ -21,7 +27,7 @@
           </div>
         </form>
       </div>
-      <div id="section">
+      <div class="section">
         <div id="form-upload-container" class="hidden well well-lg">
           <form id="form-upload" method="POST" class="dropzone" enctype="multipart/form-data" action="{{ upload_url }}">
             <input type="hidden" name="stream_id" value="{{ stream.id }}"/>
