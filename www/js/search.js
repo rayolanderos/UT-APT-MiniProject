@@ -5,20 +5,18 @@
     var autoComplete = $('#input_search').autocomplete({
         source: function (request, response) {
             var term = request.term;
-            console.log(term);
             if (term in cache) {
                 response(cache[term]);
                 return;
             }
 
             $.getJSON('api/search?s=' + term, request, function (data, status, xhr) {
-                console.log('Data: ' + data);
                 cache[term] = data;
                 response(data);
             });
         }, position: {my: 'right top', at: 'right bottom+9'},
         select: function (event, ui) {
-
+            window.location = 'view?id='+ ui.item.id;
         }
     });
 
