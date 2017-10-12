@@ -17,7 +17,6 @@ class Search(webapp2.RequestHandler):
         s = urllib.unquote_plus(s)
 
         query = '"{0}"'.format(s.replace('"', ''))
-
         stream_list = []
 
         expr_list = [search.SortExpression(
