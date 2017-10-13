@@ -11,6 +11,18 @@ from models.stream import Stream
 
 class CreateStream(webapp2.RequestHandler):
 
+    def tokenize_autocomplete(self, phrase ):
+        a = []
+        for word in phrase.split():
+            j = 1
+            while True:
+                for i in range(len(word) - j + 1):
+                    a.append(word[i:i + j])
+                if j == len(word):
+                    break
+                j += 1
+        return a
+
     def post(self):
 
         json_string = self.request.body
@@ -37,10 +49,16 @@ class CreateStream(webapp2.RequestHandler):
             longitude = random.uniform(180, -180)
             geopoint = search.GeoPoint(latitude, longitude)
             search_tags = ' '.join(tags)
+            tokenized_name = self.tokenize_autocomplete( stream_name )
+            tokenized_tags = self.tokenize_autocomplete( search_tags )
+            tokenized_name = ','.join( tokenized_name )
+            tokenized_tags = ','.join( tokenized_tags )
             search_index = search.Document(
                 doc_id= stream_id,
                 fields=[search.TextField(name='name', value=stream_name),
+                search.TextField(name='tokenized_name', value=tokenized_name),
                 search.TextField(name='cover_url', value=stream_cover_url), 
+                search.TextField(name='tokenized_tags', value=tokenized_tags),
                 search.TextField(name='tags', value=search_tags),
                 search.TextField(name="stream_id", value= stream_id),
                 search.DateField(name='date', value=datetime.datetime.now()), 

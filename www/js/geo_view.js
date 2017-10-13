@@ -72,7 +72,7 @@ $(function() {
     $("#current-range-min").text(get_display_date(min_date) );
     $("#current-range-max").text(get_display_date(max_date) );
     
-    $("#range-filter").slider({
+    $("#range-filter").bootstrapSlider({
         
     });
     $("#range-filter").on("slide", function(slideEvt) {
