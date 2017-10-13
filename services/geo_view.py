@@ -23,7 +23,7 @@ class GeoView(webapp2.RequestHandler):
         formatted_date_min = datetime.today() - timedelta(days=days_to_subtract)
 
         self.response.headers['Content-Type'] = 'application/json'
-        photos = Photo.query(Photo.stream_id == stream_id, Photo.date <= formatted_date_max, Photo.date >= formatted_date_min )
+        photos = Photo.query(Photo.stream_id == stream_id, Photo.date <= formatted_date_max, Photo.date >= formatted_date_min ).fetch()
 
         photos_data = []
         if photos != None :

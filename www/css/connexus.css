@@ -259,6 +259,11 @@ button#btn-geo-view {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 }
 
+.dropzone.disabled{
+  opacity: 0.5;
+  cursor: default;
+}
+
 span.btn {
     color: #111;
     background-color: #f8f9fa;

@@ -23,14 +23,12 @@ var myDropzone = new Dropzone("#form-upload", {
 myDropzone.on("complete", function() {
   // If all files have been uploaded
   if (this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
-    var _this = this;
-    // Remove all files
-    _this.removeAllFiles();
-    reloadPage();
+    completedQueue();
   }
 });
 
 myDropzone.on("addedfile", function(file) { 
+    $("#start-upload").show()
     $.ajax({
         url: '/generate_upload_url',
         async: false,
@@ -42,7 +40,7 @@ myDropzone.on("addedfile", function(file) {
 });
 
 function startUpload(){
-    $("#start-upload").prop("disabled", true)
+    $("#start-upload").hide()
     for (var i = 0; i < myDropzone.getAcceptedFiles().length; i++) {
         $.ajax({
             url: '/generate_upload_url',
@@ -54,7 +52,19 @@ function startUpload(){
         });
         myDropzone.processFile(myDropzone.getAcceptedFiles()[i]);
     }
-    $("#start-upload").prop("disabled", false)
+}
+
+function completedQueue(){
+    $("#more-upload").show()
+    $(".dropzone").addClass("disabled");
+    myDropzone.disable()
+}
+
+function restartUpload(){
+    myDropzone.enable();
+    $(".dropzone").removeClass("disabled");
+    myDropzone.removeAllFiles();
+    $("#more-upload").hide();
 }
 
 function reloadPage(){
