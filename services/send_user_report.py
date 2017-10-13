@@ -15,7 +15,7 @@ class SendUserReport(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         rate = self.request.get('rate')
         report_rate = int(rate)
-        email_address = "noreply@ut-apt-fall2017.appspotmail.com"
+        email_address = "noreply@apt-miniproject-greenteam-v2.appspotmail.com"
         email_subject = "This is your requested digest for connexus"
 
         subscribers = ConnexusUser.query(ConnexusUser.report == report_rate).fetch()
