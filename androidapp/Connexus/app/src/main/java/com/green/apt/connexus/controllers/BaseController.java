@@ -9,4 +9,8 @@ package com.green.apt.connexus.controllers;
 
 public abstract class BaseController {
 
+    private static final String BASE_URL = "https://apt-miniproject-greenteam-v2.appspot.com/api/";
+    private static String ApiUrl = "";
+
+
 }
