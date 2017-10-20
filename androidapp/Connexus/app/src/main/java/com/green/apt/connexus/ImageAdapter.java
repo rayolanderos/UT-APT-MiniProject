@@ -5,21 +5,30 @@ package com.green.apt.connexus;
  */
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-public class ImageAdapter extends BaseAdapter {
-    private Context mContext;
+import java.io.InputStream;
+import java.util.List;
 
-    public ImageAdapter(Context c) {
+public class ImageAdapter extends BaseAdapter{
+    private Context mContext;
+    private List<String> imageUrls;
+
+    public ImageAdapter(Context c, List<String> imageUrls) {
         mContext = c;
+        this.imageUrls = imageUrls;
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return imageUrls.size();
     }
 
     public Object getItem(int position) {
@@ -42,11 +51,36 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
+        new DownloadImageTask(imageView)
+                .execute(imageUrls.get(position));
 
-        imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
 
-    // references to our images
-    private Integer[] mThumbIds = { R.drawable.sample_2, R.drawable.sample_3, R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7, R.drawable.sample_0, R.drawable.sample_1, R.drawable.sample_2, R.drawable.sample_3, R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7, R.drawable.sample_0, R.drawable.sample_1, R.drawable.sample_2, R.drawable.sample_3, R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7 };
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
 }
+
