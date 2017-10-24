@@ -38,6 +38,11 @@ public class ViewAllActivity extends AppCompatActivity {
         this.getAllStreams();
     }
 
+    public void goToSubscribed(View view) {
+        Intent intent = new Intent(this, ViewSubscribedActivity.class);
+        startActivity(intent);
+    }
+
     private void parseStreams(){
 
         try {

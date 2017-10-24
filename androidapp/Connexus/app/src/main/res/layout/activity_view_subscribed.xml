@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.green.apt.connexus.ViewSingleActivity"
+    tools:context="com.green.apt.connexus.ViewSubscribedActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
     android:focusableInTouchMode="true" >
@@ -13,7 +13,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Single Streams"
+        android:text="Subscribed Streams"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textStyle="bold"
@@ -32,8 +32,8 @@
 
     <GridView
         android:id="@+id/gridview"
-        android:layout_width="327dp"
-        android:layout_height="369dp"
+        android:layout_width="322dp"
+        android:layout_height="357dp"
         android:columnWidth="90dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
@@ -48,30 +48,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/uploadImage"
-        android:layout_width="160dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Upload an Image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridview" />
-
-    <Button
-        android:id="@+id/backToStreams"
-        android:layout_width="152dp"
-        android:layout_height="44dp"
+        android:id="@+id/button2"
+        android:layout_width="324dp"
+        android:layout_height="59dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:onClick="goToStreams"
-        android:text="Back to all streams"
+        android:text="Back to All Streams"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/uploadImage"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridview" />
-
 </android.support.constraint.ConstraintLayout>
