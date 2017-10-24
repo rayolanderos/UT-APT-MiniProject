@@ -7,10 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
-import org.json.*;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,58 +16,73 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.green.apt.connexus.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewAllActivity extends AppCompatActivity {
+public class ViewSingleActivity extends AppCompatActivity {
 
     private static final String BASE_URL = "https://apt-miniproject-greenteam-v2.appspot.com/api/";
-    private static String relativeUrl = "view_all";
-    private static String streams = "All Streams";
-    private static List<String> streamCoverUrls = new ArrayList<>();
-    private static List<Long> streamIds = new ArrayList<>();
-    private static List<String> streamNames = new ArrayList<>();
+    private static String relativeUrl = "view";
+    private static String stream = "";
+    private static String streamName = "Single Stream";
+    private static Long streamId = null;
+
+    private static List<String> streamPhotos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_all);
-        this.getAllStreams();
+        setContentView(R.layout.activity_view_single);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        streamName = extras.getString("SINGLE_STREAM_NAME");
+        streamId = Long.parseLong(extras.getString("SINGLE_STREAM_ID"));
+
+        // Capture the layout's TextView and set the string as its text
+        TextView textView = (TextView) findViewById(R.id.textView);
+        textView.setText(streamName);
+
+        this.getStreamPhotos();
     }
 
-    private void parseStreams(){
+    public void backToStreams(View view) {
+        Intent intent = new Intent(this, ViewAllActivity.class);
+        startActivity(intent);
+    }
+
+    private void parseStream(){
 
         try {
             Object object=null;
-            String cover = "";
-            Long stream_id;
-            String stream_name = "";
-            JSONArray jsonArr = new JSONArray(streams);
+            String image = "";
+            JSONObject json = new JSONObject(stream);
+            JSONArray jsonArr = json.getJSONArray("photos");
+            Log.d("ViewAllActivity", "Stream: " + stream);
 
             for (int i = 0; i < jsonArr.length(); i++)
             {
-                cover = jsonArr.getJSONObject(i).getString("cover_url");
-                stream_id = jsonArr.getJSONObject(i).getLong("id");
-                stream_name = jsonArr.getJSONObject(i).getString("name");
-                streamCoverUrls.add(cover);
-                streamIds.add(stream_id);
-                streamNames.add(stream_name);
-                Log.d("ViewAllActivity","Parsed: Image #"+ i +"-- Cover: "+ cover + " -- name: " + stream_name + " -- id "+ stream_id);
+                image = jsonArr.getString(i);
+                streamPhotos.add(image);
+                Log.d("ViewAllActivity", "Photo: " + image);
             }
 
         }
         catch(Exception e){
-            Log.d("ViewAllActivity", "Errored Streams: " + streams);
+            Log.d("ViewAllActivity", "Errored Stream: " + stream);
             Log.e("ViewAllActivity", e.getMessage());
         }
 
     }
 
-    private String getAllStreams(){
+    private String getStreamPhotos(){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url =getAbsoluteUrl(relativeUrl);
+        String url =getAbsoluteUrl(relativeUrl) + "?id=" + streamId + "&offset=0&limit=300";
 
         String response = "";
 
@@ -79,22 +92,15 @@ public class ViewAllActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        streams = response.substring(0);
-                        parseStreams();
+                        stream = response.substring(0);
+                        parseStream();
                         GridView gridview = (GridView) findViewById(R.id.gridview);
-                        gridview.setAdapter(new ImageAdapter(getApplicationContext(), streamCoverUrls));
+                        gridview.setAdapter(new ImageAdapter(getApplicationContext(), streamPhotos));
 
-                        gridview.setOnItemClickListener(new OnItemClickListener() {
+                        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             public void onItemClick(AdapterView<?> parent, View v,
                                                     int position, long id) {
-                                Toast.makeText(ViewAllActivity.this, "" + streamNames.get(position),
-                                        Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), ViewSingleActivity.class);
-                                Bundle extras = new Bundle();
-                                extras.putString("SINGLE_STREAM_NAME", streamNames.get(position));
-                                extras.putString("SINGLE_STREAM_ID", streamIds.get(position).toString());
-                                intent.putExtras(extras);
-                                startActivity(intent);
+
                             }
                         });
 
@@ -113,4 +119,5 @@ public class ViewAllActivity extends AppCompatActivity {
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }
+
 }
