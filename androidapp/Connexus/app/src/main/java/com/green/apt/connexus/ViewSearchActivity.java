@@ -79,7 +79,7 @@ public class ViewSearchActivity extends AppCompatActivity {
             Log.e("ViewSearchActivity", e.getMessage());
         }
         streamCoverUrls.clear();
-        streamNames.clear();
+        streamIds.clear();
         streamNames.clear();
 
         this.updateTextFields(query);
@@ -111,7 +111,7 @@ public class ViewSearchActivity extends AppCompatActivity {
                 streamCoverUrls.add(cover);
                 streamIds.add(stream_id);
                 streamNames.add(stream_name);
-//                Log.d("ViewSearchActivity","Parsed: Image #"+ i +"-- Cover: "+ cover + " -- name: " + stream_name + " -- id "+ stream_id);
+//              Log.d("ViewSearchActivity","Parsed: Image #"+ i +"-- Cover: "+ cover + " -- name: " + stream_name + " -- id "+ stream_id);
             }
         }
         catch(Exception e){

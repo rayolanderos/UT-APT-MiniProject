@@ -45,6 +45,7 @@ public class ViewSingleActivity extends AppCompatActivity {
         // Capture the layout's TextView and set the string as its text
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(streamName);
+        streamPhotos.clear();
 
         this.getStreamPhotos();
     }

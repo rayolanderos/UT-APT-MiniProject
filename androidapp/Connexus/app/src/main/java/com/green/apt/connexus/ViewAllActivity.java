@@ -38,7 +38,7 @@ public class ViewAllActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_all);
         streamCoverUrls.clear();
         streamNames.clear();
-        streamNames.clear();
+        streamIds.clear();
         this.getAllStreams();
     }
 

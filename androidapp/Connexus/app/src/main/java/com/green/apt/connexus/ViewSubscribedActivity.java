@@ -34,6 +34,10 @@ public class ViewSubscribedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_subscribed);
+        streamCoverUrls.clear();
+        streamIds.clear();
+        streamNames.clear();
+
         this.getSubscribedStreams();
     }
 
