@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void uploadAPictureClick(View view) {
         Intent intent  = new Intent(this, UploadActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, "");
+        intent.putExtra(EXTRA_MESSAGE, "5642779036221440"); // Stream test id
         startActivity(intent);
     }
 }

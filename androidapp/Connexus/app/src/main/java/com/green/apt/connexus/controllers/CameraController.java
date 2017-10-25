@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -12,6 +11,7 @@ import android.widget.ImageView;
 
 import com.green.apt.connexus.CameraActivity;
 import com.green.apt.connexus.R;
+import com.green.apt.connexus.core.ImageHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,30 +40,15 @@ public class CameraController extends BaseController {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
             refreshPreviewImage();
+
         }
 
     }
 
     private void refreshPreviewImage() {
         ImageView preview = (ImageView) activity.findViewById(R.id.picturePreview);
-        int targetW = preview.getWidth();
-        int targetH = preview.getHeight();
-
         if (capturedPhotoFilePath != null) {
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(capturedPhotoFilePath, bmOptions);
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inSampleSize = scaleFactor;
-            bmOptions.inPurgeable = true;
-
-            Bitmap bitmap = BitmapFactory.decodeFile(capturedPhotoFilePath, bmOptions);
-            preview.setImageBitmap(bitmap);
+            ImageHelper.setImageFromUrl(preview, capturedPhotoFilePath);
         }
     }
 
@@ -74,7 +59,7 @@ public class CameraController extends BaseController {
             File photoFile = createImageFile();
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(activity, "com.green.apt.connexus.fileprovider", photoFile);
-                capturedPhotoFilePath = photoFile.getAbsolutePath();
+                capturedPhotoFilePath = photoURI.toString();
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 activity.startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
             }
@@ -99,10 +84,13 @@ public class CameraController extends BaseController {
     }
 
     public void goBackToStreams() {
-
+        // TODO
     }
 
     public void useTakenPicture() {
-
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(UploadController.TAKEN_PICTURE_URL, capturedPhotoFilePath);
+        activity.setResult(RESULT_OK, resultIntent);
+        activity.finish();
     }
 }

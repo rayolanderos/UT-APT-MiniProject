@@ -12,14 +12,17 @@ import com.green.apt.connexus.controllers.UploadController;
 
 public class UploadActivity extends AppCompatActivity {
 
-    public static final String DISPLAY_MESSAGE = "com.green.apt.connexus.Library";
-    public static final String CAMERA_MESSAGE = "com.green.apt.connexus.OpenCamera";
     private UploadController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        controller = new UploadController(this);
+
+        Intent intent = this.getIntent();
+        String streamId = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        controller = new UploadController(this, streamId);
+
+
         setContentView(R.layout.activity_upload);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -27,16 +30,21 @@ public class UploadActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        controller.handleActivityResult(requestCode, resultCode, data);
+    }
+
     public void chooseFromLibraryClick(View view) {
-//        Intent intent  = new Intent(this, DisplayMessageActivity.class);
-//        intent.putExtra(EXTRA_MESSAGE, message);
-//        startActivity(intent);
+        controller.selectFromLibrary();
     }
 
     public void useCameraClick(View view) {
-        Intent intent  = new Intent(this, CameraActivity.class);
-        intent.putExtra(CAMERA_MESSAGE, "");
-        startActivity(intent);
+        controller.launchCameraActivity();
+    }
+
+    public void uploadBtnClick(View view) {
+        controller.uploadSelectedImage();
     }
 
 }
