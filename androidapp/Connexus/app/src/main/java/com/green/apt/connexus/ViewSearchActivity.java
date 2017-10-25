@@ -67,7 +67,7 @@ public class ViewSearchActivity extends AppCompatActivity {
         this.hideKeyboard();
         EditText searchField = (EditText) findViewById(R.id.searchField);
         String query = searchField.getText().toString();
-
+        offset = 0;
         runSearch(query);
     }
 
