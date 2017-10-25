@@ -32,6 +32,7 @@ public class ViewSearchActivity extends AppCompatActivity {
     private static String relativeUrl = "search";
     private static String streams = "Search Results";
     private static String searchQuery = "";
+    private static int offset = 0;
     private static List<String> streamCoverUrls = new ArrayList<>();
     private static List<Long> streamIds = new ArrayList<>();
     private static List<String> streamNames = new ArrayList<>();
@@ -67,6 +68,13 @@ public class ViewSearchActivity extends AppCompatActivity {
         EditText searchField = (EditText) findViewById(R.id.searchField);
         String query = searchField.getText().toString();
 
+        runSearch(query);
+    }
+
+    public void viewNext(View view){
+        offset += 8;
+        TextView searchText = (TextView) findViewById(R.id.searchText);
+        String query = searchText.getText().toString();
         runSearch(query);
     }
 
@@ -111,7 +119,6 @@ public class ViewSearchActivity extends AppCompatActivity {
                 streamCoverUrls.add(cover);
                 streamIds.add(stream_id);
                 streamNames.add(stream_name);
-//              Log.d("ViewSearchActivity","Parsed: Image #"+ i +"-- Cover: "+ cover + " -- name: " + stream_name + " -- id "+ stream_id);
             }
         }
         catch(Exception e){
@@ -125,7 +132,8 @@ public class ViewSearchActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         // hardcoded user id for now
-        String url =getAbsoluteUrl(relativeUrl)+ "?s=" + searchQuery;
+        String url =getAbsoluteUrl(relativeUrl)+ "?limit=8&s=" + searchQuery + "&offset=" + String.valueOf(offset);
+        Log.d("ViewSearchActivity", "Request URL: " + url);
         String response = "";
 
         // Request a string response from the provided URL.
@@ -135,6 +143,7 @@ public class ViewSearchActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         streams = response.substring(0);
+                        Log.d("ViewSearchActivity", "Response: " + streams);
                         parseStreams();
                         GridView gridview = (GridView) findViewById(R.id.gridview);
                         gridview.setAdapter(new ImageAdapter(getApplicationContext(), streamCoverUrls));
