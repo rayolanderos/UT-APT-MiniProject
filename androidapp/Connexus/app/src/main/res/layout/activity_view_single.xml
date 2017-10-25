@@ -68,7 +68,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:onClick="goToStreams"
-        android:text="Back to all streams"
+        android:text="All streams"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/uploadImage"
         app:layout_constraintRight_toRightOf="parent"

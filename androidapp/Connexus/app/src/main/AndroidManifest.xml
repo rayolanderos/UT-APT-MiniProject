@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewSingleActivity" />
-        <activity android:name=".ViewSubscribedActivity"></activity>
+        <activity android:name=".ViewSubscribedActivity" />
+        <activity android:name=".ViewSearchActivity"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,11 +36,22 @@ public class ViewAllActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all);
+        streamCoverUrls.clear();
+        streamNames.clear();
+        streamNames.clear();
         this.getAllStreams();
     }
 
     public void goToSubscribed(View view) {
         Intent intent = new Intent(this, ViewSubscribedActivity.class);
+        startActivity(intent);
+    }
+
+    public void searchStream(View view){
+        EditText editText = (EditText) findViewById(R.id.editText);
+        String searchQuery = editText.getText().toString();
+        Intent intent = new Intent(this, ViewSearchActivity.class);
+        intent.putExtra("SEARCH_QUERY", searchQuery);
         startActivity(intent);
     }
 
