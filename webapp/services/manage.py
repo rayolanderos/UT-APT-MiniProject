@@ -29,6 +29,7 @@ class Manage(webapp2.RequestHandler):
                     stream_list.append({
                     'id': stream.key.id(), 
                     'name': stream.name, 
+                    'cover_url': stream.cover_url, 
                     'date': date_string, 
                     'photo_count': len(stream.photos),
                     'all_time_views': stream.views

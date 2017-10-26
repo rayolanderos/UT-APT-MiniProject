@@ -13,6 +13,8 @@ class Search(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
         s = self.request.get('s')
+        limit = self.request.get('limit', 5)
+        offset = self.request.get('offset', 0)
 
         s = urllib.unquote_plus(s)
 
@@ -30,7 +32,8 @@ class Search(webapp2.RequestHandler):
         sort_opts = search.SortOptions(
              expressions=expr_list)
         query_options = search.QueryOptions(
-            limit=5,
+            limit=int(limit),
+            offset = int(offset),
             sort_options=sort_opts)
         query_obj = search.Query(query_string=query, options=query_options)
         results = search.Index(name='stream').search(query=query_obj)
