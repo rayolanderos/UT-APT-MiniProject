@@ -41,6 +41,11 @@ public class ViewAllActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToNearby(View view) {
+        Intent intent = new Intent(this, ViewNearbyActivity.class);
+        startActivity(intent);
+    }
+
     public void searchStream(View view){
         EditText editText = (EditText) findViewById(R.id.editText);
         String searchQuery = editText.getText().toString();
