@@ -1,10 +1,12 @@
 package com.green.apt.connexus.controllers;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +52,8 @@ public class ViewNearbyController extends BaseController {
     private static String photos = "Nearby Results";
     private static String lat = "";
     private static String lon = "";
+    private static Double latitude;
+    private static Double longitude;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -62,9 +66,11 @@ public class ViewNearbyController extends BaseController {
     private ViewNearbyActivity viewNearbyActivity;
 
 
-    public ViewNearbyController(ViewNearbyActivity activity) {
+    public ViewNearbyController(ViewNearbyActivity activity, Double latitude, Double longitude) {
         super(activity);
         viewNearbyActivity = activity;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public void setOffset(int offset) {
@@ -76,49 +82,11 @@ public class ViewNearbyController extends BaseController {
         return offset;
     }
 
-    private boolean checkPlayServices() {
-
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(viewNearbyActivity.getApplicationContext());
-
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (googleApiAvailability.isUserResolvableError(resultCode)) {
-                Log.d("ViewNearbyController", "unresolvableError");
-            } else {
-                Toast.makeText(viewNearbyActivity.getApplicationContext(),
-                        "This device is not supported.", Toast.LENGTH_LONG)
-                        .show();
-            }
-            return false;
-        }
-        return true;
-    }
-
     public void runSearch(){
 
         // Find lat and lon of user
-        Log.d("ViewNearbyController", "Running Search: -lat: " + lat +" -lon: " +lon);
-        if (checkPlayServices()){
-            try
-            {
-                this.buildGoogleApiClient();
-                lastLocation = LocationServices.FusedLocationApi
-                        .getLastLocation(mGoogleApiClient);
-
-                // last location is coming up null
-                Double latitude = lastLocation.getLatitude();
-                Double longitude = lastLocation.getLongitude();
-
-                lat = latitude.toString();
-                lon = longitude.toString();
-                Log.d("ViewNearbyController", "Success checkPlayServices: -lat: " + lat +" -lon: " +lon);
-            }
-            catch (SecurityException e)
-            {
-                e.printStackTrace();
-                Log.e("ViewNearbyController", "Error in 108: " + e.getMessage());
-            }
-        }
+        lat = "30"; //latitude.toString();
+        lon =  "30"; //longitude.toString();
 
         photoUrls.clear();
         streamIds.clear();
@@ -136,9 +104,8 @@ public class ViewNearbyController extends BaseController {
             JSONArray jsonArr = new JSONArray(photos);
             for (int i = 0; i < jsonArr.length(); i++)
             {
-                cover = jsonArr.getJSONObject(i).getString("cover_url");
-                stream_id = Long.parseLong(jsonArr.getJSONObject(i).getString("id"));
-                stream_name = jsonArr.getJSONObject(i).getString("name");
+                cover = jsonArr.getJSONObject(i).getString("url");
+                stream_id = Long.parseLong(jsonArr.getJSONObject(i).getString("stream_id"));
                 photoUrls.add(cover);
                 streamIds.add(stream_id);
             }
@@ -194,16 +161,4 @@ public class ViewNearbyController extends BaseController {
         return response;
     }
 
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(viewNearbyActivity.getApplicationContext())
-                .addApi(LocationServices.API).build();
-
-        mGoogleApiClient.connect();
-
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-    }
 }
