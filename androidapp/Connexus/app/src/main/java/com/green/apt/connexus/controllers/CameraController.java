@@ -28,12 +28,10 @@ public class CameraController extends BaseController {
 
     static final int REQUEST_IMAGE_CAPTURE = 42;
 
-    CameraActivity activity;
-
     private String capturedPhotoFilePath;
 
     public CameraController(CameraActivity activity){
-        this.activity = activity;
+        super(activity);
     }
 
     public void handleCameraResult(int requestCode, int resultCode, Intent data) {
@@ -46,7 +44,7 @@ public class CameraController extends BaseController {
     }
 
     private void refreshPreviewImage() {
-        ImageView preview = (ImageView) activity.findViewById(R.id.picturePreview);
+        ImageView preview = (ImageView) getActivity().findViewById(R.id.picturePreview);
         if (capturedPhotoFilePath != null) {
             ImageHelper.setImageFromUrl(preview, capturedPhotoFilePath);
         }
@@ -54,14 +52,14 @@ public class CameraController extends BaseController {
 
     public void fireupCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (cameraIntent.resolveActivity(activity.getPackageManager()) != null) {
+        if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
 
             File photoFile = createImageFile();
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(activity, "com.green.apt.connexus.fileprovider", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(getActivity(), "com.green.apt.connexus.fileprovider", photoFile);
                 capturedPhotoFilePath = photoURI.toString();
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                activity.startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+                getActivity().startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
     }
@@ -69,7 +67,7 @@ public class CameraController extends BaseController {
     private File createImageFile() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = String.format("JPEG_%s_", timeStamp);
-        File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         try {
             File image = File.createTempFile(
                     imageFileName,
@@ -90,7 +88,7 @@ public class CameraController extends BaseController {
     public void useTakenPicture() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra(UploadController.TAKEN_PICTURE_URL, capturedPhotoFilePath);
-        activity.setResult(RESULT_OK, resultIntent);
-        activity.finish();
+        getActivity().setResult(RESULT_OK, resultIntent);
+        getActivity().finish();
     }
 }
