@@ -19,7 +19,7 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = this.getIntent();
-        String streamId = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        Long streamId = intent.getLongExtra("SINGLE_STREAM_ID", 0);
         controller = new UploadController(this, streamId);
 
 

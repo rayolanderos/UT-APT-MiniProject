@@ -15,8 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 
 public abstract class BaseController {
 
-    private static final String BASE_URL = "https://apt-miniproject-greenteam-v2.appspot.com/api/";
-    private static String ApiUrl = "";
+    private static final String BASE_URL = "https://apt-miniproject-greenteam-v2.appspot.com/";
+    private static final String API_URL = "https://apt-miniproject-greenteam-v2.appspot.com/api/";
 
     private Activity activity;
 
@@ -26,6 +26,10 @@ public abstract class BaseController {
 
     protected Activity getActivity() {
         return activity;
+    }
+
+    protected String getAbsoluteAPIUrl(String relativeUrl) {
+        return API_URL + relativeUrl;
     }
 
     protected String getAbsoluteUrl(String relativeUrl) {

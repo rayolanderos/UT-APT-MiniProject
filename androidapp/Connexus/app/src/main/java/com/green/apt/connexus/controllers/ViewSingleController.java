@@ -41,6 +41,8 @@ public class ViewSingleController extends BaseController {
         this.streamId = streamId;
     }
 
+    public Long getStreamId() {return this.streamId; }
+
     private void parseStream(){
 
         try {
@@ -68,7 +70,7 @@ public class ViewSingleController extends BaseController {
     public String getStreamPhotos(){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url =getAbsoluteUrl(relativeUrl) + "?id=" + streamId + "&offset=0&limit=300";
+        String url = getAbsoluteAPIUrl(relativeUrl) + "?id=" + streamId + "&offset=0&limit=300";
 
         String response = "";
 

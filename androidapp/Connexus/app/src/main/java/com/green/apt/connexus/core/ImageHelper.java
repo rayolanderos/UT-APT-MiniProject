@@ -54,7 +54,7 @@ public class ImageHelper {
         view.setImageBitmap(bitmap);
     }
 
-    private static InputStream getInputStream(ContentResolver resolver, String url) {
+    public static InputStream getInputStream(ContentResolver resolver, String url) {
         try {
             return resolver.openInputStream(Uri.parse(url));
         } catch (IOException ioe) {

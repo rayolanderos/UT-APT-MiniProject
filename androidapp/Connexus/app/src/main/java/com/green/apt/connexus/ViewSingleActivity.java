@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.green.apt.connexus.controllers.UploadController;
 import com.green.apt.connexus.controllers.ViewSingleController;
 
 public class ViewSingleActivity extends AppCompatActivity {
@@ -36,6 +37,12 @@ public class ViewSingleActivity extends AppCompatActivity {
 
     public void goToStreams(View view) {
         Intent intent = new Intent(this, ViewAllActivity.class);
+        startActivity(intent);
+    }
+
+    public void uploadAnImageClick(View view) {
+        Intent intent = new Intent(this, UploadActivity.class);
+        intent.putExtra("SINGLE_STREAM_ID", controller.getStreamId());
         startActivity(intent);
     }
 
