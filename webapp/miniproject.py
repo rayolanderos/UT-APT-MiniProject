@@ -24,6 +24,8 @@ from services import manage as ManageService
 from services import search as SearchService
 from services import trending as TrendingService
 from services import geo_view as GeoViewService
+from services import index_photos
+from services import nearby
 from services import generate_trending 
 from services import stream_service
 from services import update_user_report
@@ -109,6 +111,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/api/view', ViewService.View, name='api-view'),
     webapp2.Route('/geo_view', geo_view.GeoView, name='geo-view'),
     webapp2.Route('/api/geo_view', GeoViewService.GeoView, name='api-geo-view'),
+    webapp2.Route('/api/index_photos', index_photos.IndexPhotos, name='api-index-photos'),
+    webapp2.Route('/api/nearby', nearby.Nearby, name='api-nearby'),
     webapp2.Route('/upload_photo', photos.PhotoUploadHandler, name='upload-photo'),
     webapp2.Route('/generate_upload_url', photos.GenerateUploadUrlHandler, name='generate-upload-url')
 

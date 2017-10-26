@@ -25,6 +25,10 @@ class Photo(ndb.Model):
         date = self.date
         return date;
 
+    def get_stream_id(self):
+        stream_id = self.stream_id
+        return stream_id;
+
     @classmethod
     def from_url(cls, url):
         return cls.query().filter(cls.url == str(url)).get()
