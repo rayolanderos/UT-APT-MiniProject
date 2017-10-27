@@ -43,6 +43,14 @@ public class ViewSingleController extends BaseController {
 
     public Long getStreamId() {return this.streamId; }
 
+    public void setStreamName(String name) {
+        this.streamName = name;
+    }
+
+    public String getStreamName() {
+        return streamName;
+    }
+
     private void parseStream(){
 
         try {

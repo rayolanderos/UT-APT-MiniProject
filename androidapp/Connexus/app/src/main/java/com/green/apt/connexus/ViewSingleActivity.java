@@ -27,6 +27,7 @@ public class ViewSingleActivity extends AppCompatActivity {
         String streamName = extras.getString("SINGLE_STREAM_NAME");
         Long streamId = Long.parseLong(extras.getString("SINGLE_STREAM_ID"));
         controller.setStreamId(streamId);
+        controller.setStreamName(streamName);
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = (TextView) findViewById(R.id.textView);
@@ -43,6 +44,7 @@ public class ViewSingleActivity extends AppCompatActivity {
     public void uploadAnImageClick(View view) {
         Intent intent = new Intent(this, UploadActivity.class);
         intent.putExtra("SINGLE_STREAM_ID", controller.getStreamId());
+        intent.putExtra("SINGLE_STREAM_NAME", controller.getStreamName());
         startActivity(intent);
     }
 

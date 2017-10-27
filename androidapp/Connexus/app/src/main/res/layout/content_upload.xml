@@ -47,7 +47,7 @@
         app:layout_constraintHorizontal_bias="0.473" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/uploadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -67,18 +67,20 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/uploadButton" />
 
     <TextView
         android:id="@+id/streamTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/textView"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="341dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/uploadPreview"

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -82,7 +83,9 @@ public class CameraController extends BaseController {
     }
 
     public void goBackToStreams() {
-        // TODO
+        Intent resultIntent = new Intent();
+        getActivity().setResult(RESULT_CANCELED, resultIntent);
+        getActivity().finish();
     }
 
     public void useTakenPicture() {
@@ -91,4 +94,5 @@ public class CameraController extends BaseController {
         getActivity().setResult(RESULT_OK, resultIntent);
         getActivity().finish();
     }
+
 }

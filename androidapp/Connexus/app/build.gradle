@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.green.apt.connexus"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/NOTICE' // will not include NOTICE file
+        exclude 'META-INF/LICENSE' // will not include LICENSE file
+        exclude 'META-INF/DEPENDENCIES'
+    }
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -24,6 +31,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    compile('org.apache.httpcomponents:httpmime:4.3') {
+        exclude module: 'httpclient'
+    }
+    compile('org.apache.httpcomponents:httpcore:4.+') {
+        exclude module: "httpclient"
+    }
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
