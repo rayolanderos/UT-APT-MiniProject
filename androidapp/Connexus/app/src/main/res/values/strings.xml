@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Connexus</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
 </resources>
