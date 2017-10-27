@@ -71,7 +71,7 @@ public class ViewSubscribedController extends BaseController {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         // hardcoded user id for now
-        String url =getAbsoluteUrl(relativeUrl)+ "?type=subscribed&user=116995796707875866456";
+        String url = getAbsoluteAPIUrl(relativeUrl)+ "?type=subscribed&user=116995796707875866456";
         String response = "";
 
         // Request a string response from the provided URL.

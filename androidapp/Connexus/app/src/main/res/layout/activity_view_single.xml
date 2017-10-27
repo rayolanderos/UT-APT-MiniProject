@@ -54,6 +54,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:onClick="uploadAnImageClick"
         android:text="Upload an Image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

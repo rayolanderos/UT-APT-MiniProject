@@ -1,9 +1,7 @@
 package com.green.apt.connexus.controllers;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,7 +44,7 @@ public class ViewAllController extends BaseController {
     public String getAllStreams(){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url =getAbsoluteUrl(relativeUrl);
+        String url = getAbsoluteAPIUrl(relativeUrl);
 
         String response = "";
 

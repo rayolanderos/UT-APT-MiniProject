@@ -1,11 +1,9 @@
 package com.green.apt.connexus.controllers;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -105,7 +103,7 @@ public class ViewSearchController extends BaseController {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         // hardcoded user id for now
-        String url =getAbsoluteUrl(relativeUrl)+ "?limit=8&s=" + searchQuery + "&offset=" + String.valueOf(offset);
+        String url = getAbsoluteAPIUrl(relativeUrl)+ "?limit=8&s=" + searchQuery + "&offset=" + String.valueOf(offset);
         Log.d("ViewSearchActivity", "Request URL: " + url);
         String response = "";
 
