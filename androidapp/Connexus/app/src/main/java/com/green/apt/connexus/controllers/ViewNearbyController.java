@@ -1,18 +1,13 @@
 package com.green.apt.connexus.controllers;
 
-import android.Manifest;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.IntentSender;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,17 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.green.apt.connexus.ImageAdapter;
 import com.green.apt.connexus.R;
 import com.green.apt.connexus.ViewNearbyActivity;
@@ -38,10 +23,8 @@ import com.green.apt.connexus.ViewSingleActivity;
 
 import org.json.JSONArray;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by rayolanderos on 10/25/17.
@@ -83,11 +66,19 @@ public class ViewNearbyController extends BaseController {
     }
 
     public void runSearch(){
-
         // Find lat and lon of user
-        lat = "30"; //latitude.toString();
-        lon =  "30"; //longitude.toString();
-
+        if(latitude == null ) {
+            lat = "30";
+        }
+        else{
+            latitude.toString();
+        }
+        if (longitude == null) {
+            lon = "30";
+        }
+        else{
+            longitude.toString();
+        }
         photoUrls.clear();
         streamIds.clear();
 

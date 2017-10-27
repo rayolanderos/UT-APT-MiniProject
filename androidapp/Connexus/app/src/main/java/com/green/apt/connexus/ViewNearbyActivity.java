@@ -6,14 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.green.apt.connexus.R;
 import com.green.apt.connexus.controllers.ViewNearbyController;
-import com.green.apt.connexus.controllers.ViewSearchController;
 
 public class ViewNearbyActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -21,10 +19,10 @@ public class ViewNearbyActivity extends AppCompatActivity implements
 
     private ViewNearbyController controller;
     private GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
+    public Location mLastLocation;
     Double lat;
     Double lon;
-
+    LocationRequest mLocationRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,19 +37,6 @@ public class ViewNearbyActivity extends AppCompatActivity implements
             Log.d("ViewNearbyActivity", "Google API client created: " + mGoogleApiClient.toString());
         }else{
             Log.d("ViewNearbyActivity", "Google API client exists: " + mGoogleApiClient.toString());
-        }
-        try {
-
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            if (mLastLocation != null) {
-                lon = mLastLocation.getLongitude();
-                lat =  mLastLocation.getLatitude();
-            }else{
-                Log.d("ViewNearbyActivity", "mLastLocation is null");
-            }
-        } catch (SecurityException e) {
-            Log.e("ViewNearbyActivity", e.getMessage());
         }
 
         controller = new ViewNearbyController(this, lat, lon);
@@ -103,6 +88,15 @@ public class ViewNearbyActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    protected void createLocationRequest() {
+        Log.d("NearbyActivity", "create location request started");
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
     }
 }
