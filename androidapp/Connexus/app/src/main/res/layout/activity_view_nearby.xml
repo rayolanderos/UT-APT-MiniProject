@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.green.apt.connexus.ViewAllActivity"
+    tools:context="com.green.apt.connexus.ViewNearbyActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
     android:focusableInTouchMode="true" >
@@ -13,7 +13,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All Streams"
+        android:text="Nearby Photos"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textStyle="bold"
@@ -30,70 +30,49 @@
         tools:layout_editor_absoluteY="20dp"
         tools:layout_editor_absoluteX="0dp" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="229dp"
-        android:layout_height="47dp"
-        android:ems="10"
-        android:hint="Search Streams"
-        android:inputType="text"
-        android:nextFocusLeft="@id/editText"
-        android:nextFocusUp="@id/editText"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/searchBtn"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
-
     <GridView
         android:id="@+id/gridview"
-        android:layout_width="326dp"
-        android:layout_height="310dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="327dp"
+        android:layout_height="369dp"
         android:columnWidth="90dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp"
+        android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/searchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:onClick="searchStream"
-        android:text="Search"
+        android:id="@+id/viewMore"
+        android:layout_width="160dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:onClick="viewNext"
+        android:text="View next"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridview" />
 
     <Button
-        android:id="@+id/subscribedBtn"
-        android:layout_width="260dp"
-        android:layout_height="46dp"
-        android:layout_marginLeft="16dp"
-        android:onClick="goToSubscribed"
-        android:text="My Subscribed Streams"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/gridview" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="58dp"
+        android:id="@+id/backToStreams"
+        android:layout_width="152dp"
         android:layout_height="44dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/globe"
-        android:onClick="goToNearby"
+        android:onClick="goToStreams"
+        android:text="All streams"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/uploadImage"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridview" />
+
 </android.support.constraint.ConstraintLayout>
