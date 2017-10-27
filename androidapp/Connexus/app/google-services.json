@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "955328462265",
+    "project_id": "connexus-f9f78"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955328462265:android:d7a4ad19164b0a22",
+        "android_client_info": {
+          "package_name": "com.green.apt.connexus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955328462265-781nahio8t49jro3int31mdvkltntf7f.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "955328462265-eti93atrf6kkdahequ7con56s7lk6m07.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.green.apt.connexus",
+            "certificate_hash": "029801ba62dae665898fee33ad28206113582c63"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQS8FtZ33-JfIP1A_tGBAs0NDi_olbA5E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
