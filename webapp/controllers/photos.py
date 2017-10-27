@@ -46,8 +46,6 @@ class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
                 # TODO display an error message
                 pass
 
-            view_uri = '{}?id={}'.format(self.uri_for('view'), stream_id)
-            self.redirect(view_uri)
 
         except:
             e = sys.exc_info()[0]
