@@ -112,7 +112,7 @@ public class ViewNearbyController extends BaseController {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         // hardcoded user id for now
-        String url =getAbsoluteUrl(relativeUrl)+ "?limit=9&offset=" + String.valueOf(offset)+ "&lat=" + lat + "&lon=" + lon;
+        String url =getAbsoluteAPIUrl(relativeUrl)+ "?limit=9&offset=" + String.valueOf(offset)+ "&lat=" + lat + "&lon=" + lon;
         Log.d("ViewNearbyController", "Request URL: " + url);
         String response = "";
 
