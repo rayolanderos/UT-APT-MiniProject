@@ -33,6 +33,13 @@ public class ViewSingleActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(streamName);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         controller.getStreamPhotos();
     }
 
