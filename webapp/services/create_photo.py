@@ -25,7 +25,7 @@ class CreatePhoto(webapp2.RequestHandler):
 
         geopoint = search.GeoPoint(lat, lon)
         search_index = search.Document(
-            doc_id= stream_id,
+            doc_id= str(stream_id),
             fields=[search.TextField(name='url', value=url),
             search.GeoField(name='geopoint', value=geopoint) ])
         result = search.Index(name='photo').put(search_index)

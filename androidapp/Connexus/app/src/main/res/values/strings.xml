@@ -8,4 +8,6 @@
     <string name="stream_title">Stream:</string>
     <string name="title_activity_camera">CameraActivity</string>
     <string name="streams_back_button">Streams</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="signed_out">Signed Out</string>
 </resources>
