@@ -110,12 +110,6 @@ public class UploadController extends BaseController{
             activity.enableUploadButton(true);
             ImageHelper.setImageFromUrl(preview, photoUrlToUpload);
         }
-
-        if (resultCode == RESULT_CANCELED) {
-            Intent i = new Intent(getActivity(), ViewAllActivity.class);
-            i.setFlags(i.FLAG_ACTIVITY_NEW_TASK | i.FLAG_ACTIVITY_CLEAR_TASK);
-            getActivity().startActivity(i);
-        }
     }
 
     public void uploadSelectedImage() {
@@ -136,7 +130,8 @@ public class UploadController extends BaseController{
 
                                 @Override
                                 public void onResponse(String response) {
-                                    System.out.println(response);
+
+                                    getActivity().finish();
                                 }
                             });
 

@@ -52,7 +52,6 @@ public class ViewSingleController extends BaseController {
     }
 
     private void parseStream(){
-
         try {
             Object object=null;
             String image = "";
@@ -60,6 +59,7 @@ public class ViewSingleController extends BaseController {
             JSONArray jsonArr = json.getJSONArray("photos");
             Log.d("ViewAllActivity", "Stream: " + stream);
 
+            streamPhotos.clear();
             for (int i = 0; i < jsonArr.length(); i++)
             {
                 image = jsonArr.getString(i);

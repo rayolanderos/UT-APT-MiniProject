@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.green.apt.connexus.CameraActivity;
 import com.green.apt.connexus.R;
+import com.green.apt.connexus.ViewAllActivity;
 import com.green.apt.connexus.core.ImageHelper;
 
 import java.io.File;
@@ -83,9 +84,9 @@ public class CameraController extends BaseController {
     }
 
     public void goBackToStreams() {
-        Intent resultIntent = new Intent();
-        getActivity().setResult(RESULT_CANCELED, resultIntent);
-        getActivity().finish();
+        Intent i = new Intent(getActivity(), ViewAllActivity.class);
+        i.setFlags(i.FLAG_ACTIVITY_NEW_TASK | i.FLAG_ACTIVITY_CLEAR_TASK);
+        getActivity().startActivity(i);
     }
 
     public void useTakenPicture() {
